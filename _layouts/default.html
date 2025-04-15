@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="author" content="Riyaz">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto+Mono:400,500&display=fallback" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+</head>
+<body>
+  <!-- Skip link -->
+  <a href="#md-content" class="md-skip">Skip to content</a>
+
+  <!-- Header -->
+  <header class="md-header" data-md-component="header">
+    <nav class="md-header__inner">
+      <!-- Header title with logo on left -->
+      <div class="md-header__title-container">
+        <div class="md-header__logo">
+          <a href="{{ '/' | relative_url }}" title="{{ site.title }}">
+            <span style="font-weight: bold; font-size: 20px; color: #4285f4;">LOGO</span>
+            <span class="md-header__title">{{ site.title }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side items -->
+      <div class="md-header__right">
+        <!-- Search -->
+        <div class="md-search" data-md-component="search">
+          <div class="md-search__form">
+            <input id="search-input" class="md-search__input" type="search" placeholder="Search" aria-label="Search">
+            <label class="md-search__icon" for="search-input">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16a6.5 6.5 0 0 1-6.5-6.5A6.5 6.5 0 0 1 9.5 3m0 2A4.5 4.5 0 0 0 5 9.5a4.5 4.5 0 0 0 4.5 4.5 4.5 4.5 0 0 0 4.5-4.5A4.5 4.5 0 0 0 9.5 5Z"/>
+              </svg>
+            </label>
+          </div>
+          <div id="search-results" class="md-search__output">
+            <div class="md-search__result">
+              <!-- Search results will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <label class="md-header__button" id="menu-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+          </svg>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <div class="md-container">
+    <main class="md-main">
+      <!-- Mobile overlay -->
+      <div id="md-overlay" class="md-overlay"></div>
+      
+      <!-- Main content with grid layout -->
+      <div class="md-content" id="md-content">
+        <div class="md-content__inner">
+          {% if page.title %}
+            <h1>{{ page.title }}</h1>
+          {% endif %}
+          
+          <!-- Three-column grid layout -->
+          <div class="grid-container">
+            <!-- Navigation column -->
+            <div class="grid-item navigation-column">
+              <nav class="md-nav">
+                <ul class="md-nav__list">
+                  <li class="md-nav__item">
+                    <a href="{{ '/' | relative_url }}" class="md-nav__link {% if page.url == '/' %}md-nav__link--active{% endif %}">Home</a>
+                  </li>
+                  
+                  <!-- Articles section -->
+                  <li class="md-nav__title">Articles</li>
+                  <li class="md-nav__item md-nav__item--nested {% if page.url contains '/articles/' or page.layout == 'post' %}md-nav__item--expanded{% endif %}">
+                    <a href="{{ '/articles/' | relative_url }}" class="md-nav__link">All Articles</a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      {% for post in site.posts %}
+                        <li class="md-nav__item">
+                          <a href="{{ post.url | relative_url }}" class="md-nav__link {% if page.url == post.url %}md-nav__link--active{% endif %}">{{ post.title }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  
+                  <!-- Pages section -->
+                  <li class="md-nav__title">Pages</li>
+                  <li class="md-nav__item">
+                    <a href="{{ '/about/' | relative_url }}" class="md-nav__link {% if page.url contains '/about/' %}md-nav__link--active{% endif %}">About</a>
+                  </li>
+                  <li class="md-nav__item">
+                    <a href="{{ '/contact/' | relative_url }}" class="md-nav__link {% if page.url contains '/contact/' %}md-nav__link--active{% endif %}">Contact</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            
+            <!-- Main content column -->
+            <div class="grid-item content-column">
+              {% if page.url == '/' %}
+                <div class="md-toc">
+                  <h2>Table of Contents</h2>
+                  <ul>
+                    {% for post in site.posts %}
+                      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              
+              {{ content }}
+            </div>
+            
+            <!-- Table of contents column -->
+            <div class="grid-item toc-column">
+              <div class="md-toc">
+                <h2>Table of Contents</h2>
+                <ul>
+                  {% if page.url == '/' %}
+                    {% for post in site.posts limit:5 %}
+                      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    <li><a href="#what-youll-learn">What You'll Learn</a></li>
+                    <li><a href="#recent-articles">Recent Articles</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#prerequisites">Prerequisites</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#contributing">Contributing</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Search data -->
+  <script type="application/json" id="search-data">
+  {% capture posts_json %}
+  [
+    {% for post in site.posts %}
+      {
+        "title": {{ post.title | jsonify }},
+        "url": {{ post.url | relative_url | jsonify }},
+        "content": {{ post.content | strip_html | strip_newlines | truncate: 150 | jsonify }},
+        "excerpt": {{ post.excerpt | strip_html | strip_newlines | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    
+    {% assign pages = site.pages | where_exp: "page", "page.title and page.url != '/' and page.url contains '.html'" %}
+    {% for page in pages %}
+      {% if forloop.first and site.posts.size > 0 %},{% endif %}
+      {
+        "title": {{ page.title | jsonify }},
+        "url": {{ page.url | relative_url | jsonify }},
+        "content": {{ page.content | strip_html | strip_newlines | truncate: 150 | jsonify }},
+        "excerpt": {{ page.excerpt | strip_html | strip_newlines | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+  {% endcapture %}
+  {{ posts_json | strip_newlines | strip }}
+  </script>
+
+  <!-- JavaScript for navigation and search -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      // Expand/collapse navigation sections
+      const navParents = document.querySelectorAll('.md-nav__item--nested');
+      
+      navParents.forEach(function(parent) {
+        const parentLink = parent.querySelector('.md-nav__link');
+        
+        parentLink.addEventListener('click', function(e) {
+          if (parentLink.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 768) {
+            e.preventDefault();
+            parent.classList.toggle('md-nav__item--expanded');
+          }
+        });
+      });
+      
+      // Add ID attributes to headings for deep linking
+      const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+      
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Search functionality
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      const searchResultsContainer = searchResults.querySelector('.md-search__result');
+      
+      // Parse posts data from the data attribute set by Jekyll
+      const allPosts = JSON.parse(document.getElementById('search-data').textContent);
+      
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+          searchResults.classList.remove('active');
+          return;
+        }
+        
+        // Perform search
+        const results = allPosts.filter(post => {
+          return post.title.toLowerCase().includes(query) || 
+                 post.content.toLowerCase().includes(query) ||
+                 (post.excerpt && post.excerpt.toLowerCase().includes(query));
+        });
+        
+        // Display results
+        searchResultsContainer.innerHTML = '';
+        searchResults.classList.add('active');
+        
+        if (results.length === 0) {
+          searchResultsContainer.innerHTML = '<div class="md-search__no-results">No matching documents</div>';
+          return;
+        }
+        
+        results.forEach(result => {
+          const resultItem = document.createElement('a');
+          resultItem.className = 'md-search__result-item';
+          resultItem.href = result.url;
+          
+          const title = document.createElement('div');
+          title.className = 'md-search__result-title';
+          title.textContent = result.title;
+          
+          const excerpt = document.createElement('div');
+          excerpt.className = 'md-search__result-excerpt';
+          excerpt.textContent = result.excerpt || result.content;
+          
+          resultItem.appendChild(title);
+          resultItem.appendChild(excerpt);
+          searchResultsContainer.appendChild(resultItem);
+        });
+      });
+      
+      // Close search results when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!searchResults.contains(e.target) && e.target !== searchInput) {
+          searchResults.classList.remove('active');
+        }
+      });
+      
+      // Close search results when pressing Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          searchResults.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
