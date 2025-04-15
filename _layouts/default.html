@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto+Mono:400,500&display=fallback" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+  <link rel="icon" href="{{ "/assets/images/favicon.ico" | relative_url }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ "/assets/images/favicon.ico" | relative_url }}" type="image/x-icon">
   
   <!-- Inline CSS for navigation -->
   <style>
@@ -88,7 +89,7 @@
       <div class="md-header__title-container">
         <div class="md-header__logo">
           <a href="{{ '/' | relative_url }}" title="{{ site.title }}">
-            <span style="font-weight: bold; font-size: 20px; color: #4285f4;">LOGO</span>
+            <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="{{ site.title }} logo" height="32">
             <span class="md-header__title">{{ site.title }}</span>
           </a>
         </div>
