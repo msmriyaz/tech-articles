@@ -49,6 +49,35 @@
       color: #0969DA; /* Blue on hover/active */
       text-decoration: none;
     }
+    /* Code block styles with copy button */
+    pre {
+      position: relative;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      color: #6e7781;
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .copy-button:hover {
+      background-color: #f3f4f6;
+      color: #0969DA;
+    }
+    .copy-button.copied {
+      background-color: #dafbe1;
+      color: #116329;
+      border-color: #116329;
+    }
   </style>
 </head>
 <body>
@@ -240,6 +269,54 @@
       </div>
     </main>
   </div>
+
+  <!-- Add code copy button script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all code blocks
+      const codeBlocks = document.querySelectorAll('pre');
+      
+      // Add copy button to each code block
+      codeBlocks.forEach(function(codeBlock) {
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-button';
+        copyButton.textContent = 'Copy';
+        
+        // Add button to code block
+        codeBlock.appendChild(copyButton);
+        
+        // Add click event listener to copy button
+        copyButton.addEventListener('click', function() {
+          // Get the code content
+          const code = codeBlock.querySelector('code') 
+            ? codeBlock.querySelector('code').innerText 
+            : codeBlock.innerText;
+          
+          // Copy to clipboard
+          navigator.clipboard.writeText(code).then(function() {
+            // Update button state to show success
+            copyButton.textContent = 'Copied!';
+            copyButton.classList.add('copied');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+              copyButton.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy text: ', err);
+            copyButton.textContent = 'Failed';
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+      });
+    });
+  </script>
 
   <!-- Search data -->
   <script type="application/json" id="search-data">
