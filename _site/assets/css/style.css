@@ -377,26 +377,6 @@ p {
   display: block;
 }
 
-.md-skip {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-.md-skip:focus {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  padding: 0.5rem 1rem;
-  background-color: #ffffff;
-  color: #0969DA;
-  z-index: 101;
-}
-
 .dropdown-icon,
 .dropdown-toggle:after {
   display: none !important;
@@ -434,7 +414,6 @@ p {
 .md-main {
   display: flex;
   width: 100%;
-  margin-top: 48px;
   max-width: 100%;
 }
 

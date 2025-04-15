@@ -461,28 +461,6 @@ p {
   }
 }
 
-// Skip link
-.md-skip {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  
-  &:focus {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    height: auto;
-    padding: 0.5rem 1rem;
-    background-color: $background-color;
-    color: $brand-color;
-    z-index: 101;
-  }
-}
-
 // Dropdown triangle icon styles - these should be removed
 .dropdown-icon, 
 .dropdown-toggle:after {
@@ -523,7 +501,6 @@ p {
 .md-main {
   display: flex;
   width: 100%;
-  margin-top: $header-height;
   max-width: 100%;
 }
 
