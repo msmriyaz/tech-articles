@@ -11,6 +11,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto+Mono:400,500&display=fallback" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+  
+  <!-- Inline CSS for navigation -->
+  <style>
+    .dropdown-icon, 
+    .dropdown-toggle:after,
+    .nav-triangle {
+      display: none !important;
+    }
+    /* Hide triangle indicators in article list */
+    .md-nav__list--nested .md-nav__link::after {
+      display: none !important;
+    }
+    /* Remove any pseudo-elements that might be adding the triangles */
+    .md-nav__item a::before,
+    .md-nav__item a::after {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Skip link -->
@@ -80,37 +98,70 @@
                     <a href="/tech-articles/" class="md-nav__link ">Home</a>
                   </li>
                   
-                  <!-- Articles section -->
-                  <li class="md-nav__title">Articles</li>
+                  <!-- Articles section with dropdown style -->
                   <li class="md-nav__item md-nav__item--nested md-nav__item--expanded">
-                    <a href="/tech-articles/articles/" class="md-nav__link">All Articles</a>
+                    <a href="/tech-articles/articles/" class="md-nav__link dropdown-toggle">
+                      All Articles
+                    </a>
                     <ul class="md-nav__list md-nav__list--nested">
                       
                         <li class="md-nav__item">
-                          <a href="/tech-articles/2024/10/28/my-first-post.html" class="md-nav__link ">My First Tech Article</a>
+                          <a href="/tech-articles/2024/10/28/my-first-post.html" class="md-nav__link ">
+                            My First Tech Article
+                          </a>
                         </li>
                       
                         <li class="md-nav__item">
-                          <a href="/tech-articles/2024/04/15/my-first-tech-article.html" class="md-nav__link ">My First Tech Article</a>
+                          <a href="/tech-articles/2024/04/15/my-first-tech-article.html" class="md-nav__link ">
+                            My First Tech Article
+                          </a>
                         </li>
                       
                     </ul>
                   </li>
                   
                   <!-- Pages section -->
-                  <li class="md-nav__title">Pages</li>
-                  <li class="md-nav__item">
-                    <a href="/tech-articles/about/" class="md-nav__link ">About</a>
-                  </li>
-                  <li class="md-nav__item">
-                    <a href="/tech-articles/contact/" class="md-nav__link ">Contact</a>
+                  <li class="md-nav__item md-nav__item--nested">
+                    <a href="javascript:void(0);" class="md-nav__link dropdown-toggle">
+                      Pages
+                    </a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/about/" class="md-nav__link ">About</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/contact/" class="md-nav__link ">Contact</a>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </nav>
             </div>
             
-            <!-- Main content column -->
+            <!-- Middle content column -->
             <div class="grid-item content-column">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem;">
+                <!-- Share Text -->
+                <span style="font-weight: bold;">Share to:</span>
+
+                <!-- Social Media Links -->
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost:4000/articles/" target="_blank" title="Share on LinkedIn">
+                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://bsky.app/intent/compose?text=http://localhost:4000/articles/" target="_blank" title="Share on Bluesky">
+                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=http://localhost:4000/articles/" target="_blank" title="Share on X (Twitter)">
+                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://reddit.com/submit?url=http://localhost:4000/articles/" target="_blank" title="Share on Reddit">
+                  <img width="20px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/" target="_blank" title="Share on Facebook">
+                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
+                </a>
+              </div>
+              
               <p>This page provides an overview of all the technical articles in our collection. Browse the list to find topics that interest you or use the search function to find specific information.</p>
 
 <h2 id="article-categories">Article Categories</h2>
@@ -204,9 +255,25 @@
       navParents.forEach(function(parent) {
         const parentLink = parent.querySelector('.md-nav__link');
         
+        // Automatically expand the All Articles section on relevant pages
+        if (parentLink.textContent.trim() === 'All Articles' && 
+            (window.location.pathname.includes('/articles/') || 
+             document.querySelector('.md-content').classList.contains('post'))) {
+          parent.classList.add('md-nav__item--expanded');
+        }
+        
         parentLink.addEventListener('click', function(e) {
           if (parentLink.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 768) {
             e.preventDefault();
+            
+            // If this is not the clicked item, close it
+            navParents.forEach(function(otherParent) {
+              if (otherParent !== parent) {
+                otherParent.classList.remove('md-nav__item--expanded');
+              }
+            });
+            
+            // Toggle the clicked item
             parent.classList.toggle('md-nav__item--expanded');
           }
         });
