@@ -28,6 +28,27 @@
     .md-nav__item a::after {
       display: none !important;
     }
+    /* Remove bullet points from table of contents */
+    .md-toc ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+    .md-toc li {
+      margin-bottom: 0.5rem;
+    }
+    /* Style table of contents links */
+    .md-toc a {
+      color: #5f6368; /* Gray text */
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .md-toc a:hover,
+    .md-toc a:active,
+    .md-toc a.active {
+      color: #0969DA; /* Blue on hover/active */
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
