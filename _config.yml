@@ -1,0 +1,5 @@
+title: My Tech Articles
+description: A collection of my technical writings.
+baseurl: "/tech-articles" # or "" if it is in the root of your username.github.io
+url: "https://msmriyaz.github.io/tech-articles" # or your root url
+theme: minima # We'll be customizing this
