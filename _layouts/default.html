@@ -107,17 +107,6 @@
             
             <!-- Main content column -->
             <div class="grid-item content-column">
-              {% if page.url == '/' %}
-                <div class="md-toc">
-                  <h2>Table of Contents</h2>
-                  <ul>
-                    {% for post in site.posts %}
-                      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-              
               {{ content }}
             </div>
             
