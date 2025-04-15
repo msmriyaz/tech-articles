@@ -6,7 +6,7 @@
   <title>Contact Us | RZTech</title>
   <meta name="description" content="A collection of my technical writings.">
   <meta name="author" content="Riyaz">
-  <link rel="canonical" href="https://msmriyaz.github.io/tech-articles/tech-articles/contact.html">
+  <link rel="canonical" href="http://localhost:4000/tech-articles/contact.html">
   <link rel="stylesheet" href="/tech-articles/assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto+Mono:400,500&display=fallback" rel="stylesheet">
   <!-- Favicon -->
@@ -15,18 +15,38 @@
   
   <!-- Inline CSS for navigation -->
   <style>
+    /* Remove default triangle indicators */
     .dropdown-icon, 
     .dropdown-toggle:after,
     .nav-triangle {
       display: none !important;
     }
-    /* Hide triangle indicators in article list */
-    .md-nav__list--nested .md-nav__link::after {
+    
+    /* Add down arrows only to top-level items with dropdown */
+    .md-nav__list > .md-nav__item--nested > .md-nav__link::after {
+      content: "▼";
+      display: inline-block !important;
+      margin-left: 4px;
+      font-size: 0.6em;
+      vertical-align: middle;
+      color: #666;
+    }
+    
+    /* Make sure no other arrows appear */
+    .md-nav__list--nested .md-nav__link::after,
+    .md-nav__list--nested .md-nav__link::before {
       display: none !important;
     }
-    /* Remove any pseudo-elements that might be adding the triangles */
-    .md-nav__item a::before,
-    .md-nav__item a::after {
+    
+    /* Main navigation styling */
+    .md-nav__list > .md-nav__item > .md-nav__link {
+      font-weight: 500;
+      font-size: 0.95em;
+      padding: 0.5rem 0;
+      color: #333;
+    }
+    /* Remove only specific pseudo-elements */
+    .md-nav__item a::before {
       display: none !important;
     }
     /* Remove bullet points from table of contents */
@@ -146,7 +166,7 @@
                     <a href="/tech-articles/" class="md-nav__link ">Home</a>
                   </li>
                   
-                  <!-- Articles section with dropdown style -->
+                  <!-- Articles section with dropdown -->
                   <li class="md-nav__item md-nav__item--nested ">
                     <a href="/tech-articles/articles/" class="md-nav__link dropdown-toggle">
                       All Articles
@@ -193,19 +213,19 @@
                 <span style="font-weight: bold;">Share to:</span>
 
                 <!-- Social Media Links -->
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://msmriyaz.github.io/tech-articles/contact.html" target="_blank" title="Share on LinkedIn">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost:4000/contact.html" target="_blank" title="Share on LinkedIn">
                   <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://bsky.app/intent/compose?text=https://msmriyaz.github.io/tech-articles/contact.html" target="_blank" title="Share on Bluesky">
+                <a href="https://bsky.app/intent/compose?text=http://localhost:4000/contact.html" target="_blank" title="Share on Bluesky">
                   <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://twitter.com/intent/tweet?url=https://msmriyaz.github.io/tech-articles/contact.html" target="_blank" title="Share on X (Twitter)">
+                <a href="https://twitter.com/intent/tweet?url=http://localhost:4000/contact.html" target="_blank" title="Share on X (Twitter)">
                   <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://reddit.com/submit?url=https://msmriyaz.github.io/tech-articles/contact.html" target="_blank" title="Share on Reddit">
+                <a href="https://reddit.com/submit?url=http://localhost:4000/contact.html" target="_blank" title="Share on Reddit">
                   <img width="20px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://msmriyaz.github.io/tech-articles/contact.html" target="_blank" title="Share on Facebook">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/contact.html" target="_blank" title="Share on Facebook">
                   <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
                 </a>
               </div>

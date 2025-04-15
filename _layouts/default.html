@@ -15,18 +15,38 @@
   
   <!-- Inline CSS for navigation -->
   <style>
+    /* Remove default triangle indicators */
     .dropdown-icon, 
     .dropdown-toggle:after,
     .nav-triangle {
       display: none !important;
     }
-    /* Hide triangle indicators in article list */
-    .md-nav__list--nested .md-nav__link::after {
+    
+    /* Add down arrows only to top-level items with dropdown */
+    .md-nav__list > .md-nav__item--nested > .md-nav__link::after {
+      content: "▼";
+      display: inline-block !important;
+      margin-left: 4px;
+      font-size: 0.6em;
+      vertical-align: middle;
+      color: #666;
+    }
+    
+    /* Make sure no other arrows appear */
+    .md-nav__list--nested .md-nav__link::after,
+    .md-nav__list--nested .md-nav__link::before {
       display: none !important;
     }
-    /* Remove any pseudo-elements that might be adding the triangles */
-    .md-nav__item a::before,
-    .md-nav__item a::after {
+    
+    /* Main navigation styling */
+    .md-nav__list > .md-nav__item > .md-nav__link {
+      font-weight: 500;
+      font-size: 0.95em;
+      padding: 0.5rem 0;
+      color: #333;
+    }
+    /* Remove only specific pseudo-elements */
+    .md-nav__item a::before {
       display: none !important;
     }
     /* Remove bullet points from table of contents */
@@ -146,7 +166,7 @@
                     <a href="{{ '/' | relative_url }}" class="md-nav__link {% if page.url == '/' %}md-nav__link--active{% endif %}">Home</a>
                   </li>
                   
-                  <!-- Articles section with dropdown style -->
+                  <!-- Articles section with dropdown -->
                   <li class="md-nav__item md-nav__item--nested {% if page.url contains '/articles/' or page.layout == 'post' %}md-nav__item--expanded{% endif %}">
                     <a href="{{ '/articles/' | relative_url }}" class="md-nav__link dropdown-toggle">
                       All Articles
