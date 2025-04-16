@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - authoring
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
 
 jobs:
   deploy:
@@ -13,11 +16,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: authoring
+          fetch-depth: 0
 
-      - name: Setup Ruby and Jekyll
-        uses: actions/setup-ruby@v1
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0' # Or your desired Ruby version
+          ruby-version: '3.0'
           bundler-cache: true
 
       - name: Install dependencies
@@ -25,11 +29,17 @@ jobs:
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
-          publish_branch: gh-pages # or main/master if configured differently
-          cname: msmriyaz.github.io #add your cname if you have one
+          publish_branch: main
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
