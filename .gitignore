@@ -1,0 +1,27 @@
+# Jekyll build directory
+_site/
+
+# Jekyll cache directory
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Bundle dependencies
+vendor/
+.bundle/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~ 
