@@ -24,20 +24,7 @@ Unlike dynamic CMS platforms, Jekyll generates static HTML files that can be hos
 
 One of Jekyll's greatest strengths is how it integrates with a developer's existing workflow. Here's how my content creation process works from idea to publication:
 
-```mermaid
-flowchart TD
-    A[Idea Generation] --> B[Draft in Markdown]
-    B --> C[Local Preview]
-    C --> D{Ready to Publish?}
-    D -->|No| B
-    D -->|Yes| E[Git Commit]
-    E --> F[Push to GitHub]
-    F --> G[Automatic Build]
-    G --> H[Live on Site]
-    
-    style A fill:#f5f5f5,stroke:#333,stroke-width:1px
-    style H fill:#d1ffd1,stroke:#333,stroke-width:1px
-```
+![Content Creation Workflow]({{ "/assets/images/articles/2025/content-creation-wf-2025-04-16-043556.png" | relative_url }}){: .img-fluid .rounded .shadow style="max-width: 40%; height: auto; display: block; margin: 0 auto;"}
 
 This workflow gives me several advantages:
 - **Version control** for all content changes
@@ -198,16 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 For deployment, I chose GitHub Pages because of its seamless integration with Jekyll:
 
-```mermaid
-flowchart LR
-    A[Local Git Repository] -->|Push| B[GitHub Repository]
-    B -->|GitHub Actions| C[Build Jekyll Site]
-    C -->|Deploy| D[GitHub Pages]
-    D -->|CDN| E[Global Delivery]
-    
-    style A fill:#f5f5f5,stroke:#333,stroke-width:1px
-    style E fill:#d1ffd1,stroke:#333,stroke-width:1px
-```
+![Deployment Strategy]({{ "/assets/images/articles/2025/deployment-jekyll-content-2025-04-16-043915.png" | relative_url }}){: .img-fluid .rounded .shadow style="max-width: 100%; height: auto; display: block; margin: 0 auto;"}
 
 The deployment process is fully automated - whenever I push changes to the main branch, GitHub Actions builds the site and deploys it to GitHub Pages.
 
