@@ -1,31 +1,29 @@
 ---
 layout: default
-title: Contact Us
+title: Contact Me
 ---
 
-<article class="post-content">
-  <h1>Contact Us</h1>
+<article class="post-content">  
 
   <h2 id="get-in-touch">✉️ Get in Touch</h2>
 
-  <p>We value your feedback and are here to help with any questions you might have about our technical documentation.</p>
+  <p>I value your feedback and am here to help with any questions you might have about my technical documentation.</p>
 
-  <h2 id="how-to-reach-us">📞 How to Reach Us</h2>
+  <h2 id="how-to-reach-me">📞 How to Reach Me</h2>
 
-  <p>You can contact our team through any of the following channels:</p>
+  <p>You can contact me through any of the following channels:</p>
 
   <ul>
-    <li><strong>Email</strong>: <a href="mailto:documentation@example.com">documentation@example.com</a></li>
-    <li><strong>GitHub</strong>: <a href="https://github.com/username/tech-articles/issues">Open an issue</a> in our repository</li>
-    <li><strong>Twitter</strong>: <a href="https://twitter.com/techdocs">@techdocs</a></li>
+    <li><strong>GitHub</strong>: <a href="https://github.com/msmriyaz/tech-articles/issues">Open an issue</a> in my repository</li>
+    <li><strong>X/Twitter</strong>: <a href="https://twitter.com/msmriyaz">@msmriyaz</a></li>
   </ul>
 
   <h2 id="reporting-issues">🐛 Reporting Issues</h2>
 
-  <p>If you find a technical error, unclear explanation, or missing information in our documentation:</p>
+  <p>If you find a technical error, unclear explanation, or missing information in my documentation:</p>
 
   <ol>
-    <li>Check if the issue has already been reported in our <a href="https://github.com/username/tech-articles/issues">GitHub issue tracker</a></li>
+    <li>Check if the issue has already been reported in my <a href="https://github.com/msmriyaz/tech-articles/issues">GitHub issue tracker</a></li>
     <li>If not, create a new issue with:
       <ul>
         <li>A clear title describing the problem</li>
@@ -38,13 +36,13 @@ title: Contact Us
 
   <h2 id="contributing">🤝 Contributing</h2>
 
-  <p>Interested in contributing to our documentation? We welcome your expertise! See our <a href="https://github.com/username/tech-articles/blob/main/CONTRIBUTING.md">contribution guidelines</a> to get started.</p>
+  <p>Interested in contributing to my documentation? Please <a href="https://github.com/msmriyaz/tech-articles/issues">reach out through GitHub issues</a> to discuss your ideas.</p>
 
   <h2 id="feature-requests">💡 Feature Requests</h2>
 
-  <p>Have ideas for new topics or improvements to our existing content? We'd love to hear them! Please submit feature requests through our <a href="https://github.com/username/tech-articles/issues">GitHub repository</a> with the label "enhancement."</p>
+  <p>Have ideas for new topics or improvements to my existing content or site? I'd love to hear them! Please submit feature requests through my <a href="https://github.com/msmriyaz/tech-articles/issues">GitHub repository</a> with the label "enhancement."</p>
 
   <hr>
 
-  <p>We aim to respond to all inquiries within 2 business days. Thank you for helping us improve our documentation! ✨</p>
+  <p>Thank you for helping me improve my documentation! ✨</p>
 </article>

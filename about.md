@@ -3,8 +3,7 @@ layout: default
 title: About This Documentation
 ---
 
-<article class="post-content">
-  <h1>About This Documentation</h1>
+<article class="post-content">  
 
   <h2 id="purpose">🎯 Purpose</h2>
 
@@ -38,5 +37,5 @@ title: About This Documentation
 
   <h2 id="contact-us">📬 Contact Us</h2>
 
-  <p>If you have questions, suggestions, or feedback about our documentation, please <a href="/contact">contact us</a>. We're always looking to improve our content and welcome your input.</p>
+  <p>If you have questions, suggestions, or feedback about our documentation, please <a href="{{ site.baseurl }}/contact/">contact us</a>. We're always looking to improve our content and welcome your input.</p>
 </article>
