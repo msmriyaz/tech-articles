@@ -2,7 +2,7 @@
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <meta name="author" content="Riyaz">
@@ -106,6 +106,34 @@
       color: #137333;
       border-color: #137333;
     }
+    /* Improve mobile header layout */
+    @media screen and (max-width: 767px) {
+      .md-header__inner {
+        padding: 0 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .md-header__title-container {
+        max-width: 65%;
+      }
+      
+      .md-header__title {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .md-header__right {
+        position: absolute;
+        right: 16px;
+      }
+      
+      .md-header__button {
+        margin-left: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -192,10 +220,10 @@
                     </a>
                     <ul class="md-nav__list md-nav__list--nested">
                       <li class="md-nav__item">
-                        <a href="{{ '/about/' | relative_url }}" class="md-nav__link {% if page.url contains '/about/' %}md-nav__link--active{% endif %}">About</a>
+                        <a href="{{ '/about' | relative_url }}" class="md-nav__link {% if page.url contains '/about/' %}md-nav__link--active{% endif %}">About</a>
                       </li>
                       <li class="md-nav__item">
-                        <a href="{{ '/contact/' | relative_url }}" class="md-nav__link {% if page.url contains '/contact/' %}md-nav__link--active{% endif %}">Contact</a>
+                        <a href="{{ '/contact' | relative_url }}" class="md-nav__link {% if page.url contains '/contact/' %}md-nav__link--active{% endif %}">Contact</a>
                       </li>
                     </ul>
                   </li>

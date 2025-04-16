@@ -37,5 +37,5 @@ title: About This Documentation
 
   <h2 id="contact-us">📬 Contact Us</h2>
 
-  <p>If you have questions, suggestions, or feedback about our documentation, please <a href="{{ site.baseurl }}/contact/">contact us</a>. We're always looking to improve our content and welcome your input.</p>
+  <p>If you have questions, suggestions, or feedback about our documentation, please <a href="{{ site.baseurl }}/contact">contact us</a>. We're always looking to improve our content and welcome your input.</p>
 </article>
