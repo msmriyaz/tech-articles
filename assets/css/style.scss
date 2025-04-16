@@ -690,7 +690,7 @@ code {
   background-color: $grey-color-light;
   
   @include media-query($on-palm) {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -716,16 +716,16 @@ pre {
     overflow-wrap: normal;
     display: inline-block;
     min-width: 100%;
+    
+    @include media-query($on-palm) {
+      font-size: 0.75rem;
+    }
   }
   
   @include media-query($on-palm) {
     width: 100%;
     font-size: 0.75rem;
-    padding: 0.75rem;
-    margin-left: 0;
-    box-sizing: border-box;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.75rem 0.6rem;
   }
 }
 
@@ -1054,11 +1054,19 @@ article.post-content {
   @include media-query($on-palm) {
     pre {
       font-size: 0.75rem;
-      padding: 0.75rem;
+      padding: 0.75rem 0.6rem;
       width: 100%;
       box-sizing: border-box;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      
+      code {
+        font-size: 0.75rem !important;
+      }
+    }
+    
+    code {
+      font-size: 0.75rem;
     }
   }
 } 
