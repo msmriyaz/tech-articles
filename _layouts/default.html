@@ -451,11 +451,36 @@
       // Parse posts data from the data attribute set by Jekyll
       const allPosts = JSON.parse(document.getElementById('search-data').textContent);
       
+      // Position search results better on mobile
+      function positionSearchResults() {
+        // For mobile devices
+        if (window.innerWidth <= 768) {
+          // Make sure search results appear in the viewport
+          const searchRect = searchInput.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          
+          // Position results to be visible
+          searchResults.style.maxHeight = (window.innerHeight - searchRect.bottom - 20) + 'px';
+          
+          // Disable body scrolling when search is open
+          if (searchResults.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.body.style.overflow = '';
+          }
+        } else {
+          // Reset for desktop
+          searchResults.style.maxHeight = '';
+          document.body.style.overflow = '';
+        }
+      }
+      
       searchInput.addEventListener('input', function() {
         const query = this.value.toLowerCase().trim();
         
         if (query.length < 2) {
           searchResults.classList.remove('active');
+          document.body.style.overflow = '';
           return;
         }
         
@@ -470,12 +495,18 @@
         searchResultsContainer.innerHTML = '';
         searchResults.classList.add('active');
         
+        // Position search results properly
+        positionSearchResults();
+        
         if (results.length === 0) {
           searchResultsContainer.innerHTML = '<div class="md-search__no-results">No matching documents</div>';
           return;
         }
         
-        results.forEach(result => {
+        // Limit results on mobile
+        const displayResults = window.innerWidth <= 768 ? results.slice(0, 5) : results;
+        
+        displayResults.forEach(result => {
           const resultItem = document.createElement('a');
           resultItem.className = 'md-search__result-item';
           resultItem.href = result.url;
@@ -498,6 +529,7 @@
       document.addEventListener('click', function(e) {
         if (!searchResults.contains(e.target) && e.target !== searchInput) {
           searchResults.classList.remove('active');
+          document.body.style.overflow = '';
         }
       });
       
@@ -505,6 +537,14 @@
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
           searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Handle window resize for search results positioning
+      window.addEventListener('resize', function() {
+        if (searchResults.classList.contains('active')) {
+          positionSearchResults();
         }
       });
     });
