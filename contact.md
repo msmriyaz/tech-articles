@@ -3,37 +3,48 @@ layout: default
 title: Contact Us
 ---
 
-## Get in Touch
+<article>
+  <h1>Contact Us</h1>
 
-We value your feedback and are here to help with any questions you might have about our technical documentation.
+  <h2>Get in Touch</h2>
 
-### How to Reach Us
+  <p>We value your feedback and are here to help with any questions you might have about our technical documentation.</p>
 
-You can contact our team through any of the following channels:
+  <h2>How to Reach Us</h2>
 
-- **Email**: [documentation@example.com](mailto:documentation@example.com)
-- **GitHub**: [Open an issue](https://github.com/username/tech-articles/issues) in our repository
-- **Twitter**: [@techdocs](https://twitter.com/techdocs)
+  <p>You can contact our team through any of the following channels:</p>
 
-### Reporting Issues
+  <ul>
+    <li><strong>Email</strong>: <a href="mailto:documentation@example.com">documentation@example.com</a></li>
+    <li><strong>GitHub</strong>: <a href="https://github.com/username/tech-articles/issues">Open an issue</a> in our repository</li>
+    <li><strong>Twitter</strong>: <a href="https://twitter.com/techdocs">@techdocs</a></li>
+  </ul>
 
-If you find a technical error, unclear explanation, or missing information in our documentation:
+  <h2>Reporting Issues</h2>
 
-1. Check if the issue has already been reported in our [GitHub issue tracker](https://github.com/username/tech-articles/issues)
-2. If not, create a new issue with:
-   - A clear title describing the problem
-   - Which article the issue appears in
-   - A detailed description of the problem
-   - Suggestions for fixing it (if you have any)
+  <p>If you find a technical error, unclear explanation, or missing information in our documentation:</p>
 
-### Contributing
+  <ol>
+    <li>Check if the issue has already been reported in our <a href="https://github.com/username/tech-articles/issues">GitHub issue tracker</a></li>
+    <li>If not, create a new issue with:
+      <ul>
+        <li>A clear title describing the problem</li>
+        <li>Which article the issue appears in</li>
+        <li>A detailed description of the problem</li>
+        <li>Suggestions for fixing it (if you have any)</li>
+      </ul>
+    </li>
+  </ol>
 
-Interested in contributing to our documentation? We welcome your expertise! See our [contribution guidelines](https://github.com/username/tech-articles/blob/main/CONTRIBUTING.md) to get started.
+  <h2>Contributing</h2>
 
-### Feature Requests
+  <p>Interested in contributing to our documentation? We welcome your expertise! See our <a href="https://github.com/username/tech-articles/blob/main/CONTRIBUTING.md">contribution guidelines</a> to get started.</p>
 
-Have ideas for new topics or improvements to our existing content? We'd love to hear them! Please submit feature requests through our [GitHub repository](https://github.com/username/tech-articles/issues) with the label "enhancement."
+  <h2>Feature Requests</h2>
 
----
+  <p>Have ideas for new topics or improvements to our existing content? We'd love to hear them! Please submit feature requests through our <a href="https://github.com/username/tech-articles/issues">GitHub repository</a> with the label "enhancement."</p>
 
-We aim to respond to all inquiries within 2 business days. Thank you for helping us improve our documentation!
+  <hr>
+
+  <p>We aim to respond to all inquiries within 2 business days. Thank you for helping us improve our documentation!</p>
+</article>

@@ -9,6 +9,8 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto+Mono:400,500&display=fallback" rel="stylesheet">
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
   <!-- Favicon -->
   <link rel="icon" href="{{ "/assets/images/favicon.ico" | relative_url }}" type="image/x-icon">
   <link rel="shortcut icon" href="{{ "/assets/images/favicon.ico" | relative_url }}" type="image/x-icon">
@@ -227,18 +229,13 @@
             <div class="grid-item toc-column">
               <div class="md-toc">
                 <h2>Table of Contents</h2>
-                <ul>
+                <ul id="toc-list">
                   {% if page.url == '/' %}
                     {% for post in site.posts limit:5 %}
                       <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
                     {% endfor %}
                   {% else %}
-                    <li><a href="#what-youll-learn">What You'll Learn</a></li>
-                    <li><a href="#recent-articles">Recent Articles</a></li>
-                    <li><a href="#getting-started">Getting Started</a></li>
-                    <li><a href="#prerequisites">Prerequisites</a></li>
-                    <li><a href="#installation">Installation</a></li>
-                    <li><a href="#contributing">Contributing</a></li>
+                    <!-- Dynamic TOC will be populated by JavaScript -->
                   {% endif %}
                 </ul>
               </div>
@@ -448,6 +445,47 @@
         }
       });
     });
+  </script>
+
+  <script>
+    // Add ids to all headings for TOC links
+    document.addEventListener('DOMContentLoaded', function() {
+      const headings = document.querySelectorAll('article h1, article h2, article h3');
+      
+      // First add IDs to all headings if they don't have one
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.trim().toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Then populate the TOC if we're on a post page (not the homepage)
+      if (window.location.pathname !== '/' && document.getElementById('toc-list')) {
+        const tocList = document.getElementById('toc-list');
+        
+        headings.forEach(function(heading) {
+          // Skip the post title (h1)
+          if (heading.tagName !== 'H1') {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            // Add appropriate indentation for h3
+            if (heading.tagName === 'H3') {
+              listItem.style.marginLeft = '20px';
+            }
+            
+            link.href = '#' + heading.id;
+            link.textContent = heading.textContent;
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+          }
+        });
+      }
+    });
+
+    // Theme switcher logic
+    // ... existing code ...
   </script>
 </body>
 </html>

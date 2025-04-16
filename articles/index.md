@@ -4,32 +4,58 @@ title: All Articles
 excerpt: Browse our complete collection of technical articles
 ---
 
-This page provides an overview of all the technical articles in our collection. Browse the list to find topics that interest you or use the search function to find specific information.
+<article>
+  <h1>All Technical Articles</h1>
+  
+  <p>This page provides an overview of all the technical articles in our collection. Browse the list to find topics that interest you or use the search function to find specific information.</p>
 
-## Article Categories
+  <h2>Article Categories</h2>
 
-Our articles are organized into the following categories:
+  <p>Our articles are organized into the following categories:</p>
 
-- **Getting Started** - Introductory articles for beginners
-- **Tutorials** - Step-by-step guides for specific tasks
-- **Best Practices** - Recommendations for efficient and effective development
-- **Advanced Topics** - In-depth articles for experienced readers
+  <ul>
+    <li><strong>Getting Started</strong> - Introductory articles for beginners</li>
+    <li><strong>Tutorials</strong> - Step-by-step guides for specific tasks</li>
+    <li><strong>Best Practices</strong> - Recommendations for efficient and effective development</li>
+    <li><strong>Advanced Topics</strong> - In-depth articles for experienced readers</li>
+  </ul>
 
-## Complete Article List
+  <h2>Complete Article List</h2>
 
-{% assign sorted_posts = site.posts | sort: 'date' | reverse %}
-{% for post in sorted_posts %}
-### [{{ post.title }}]({{ post.url | relative_url }})
+  <div class="article-list">
+    {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+    {% for post in sorted_posts %}
+    <div class="article-item">
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p class="date"><strong>Posted on:</strong> {{ post.date | date: "%B %-d, %Y" }}</p>
+      {% if post.excerpt %}<p>{{ post.excerpt }}</p>{% endif %}
+      <p><a href="{{ post.url | relative_url }}">Read more →</a></p>
+      <hr>
+    </div>
+    {% endfor %}
+  </div>
 
-**Posted on:** {{ post.date | date: "%B %-d, %Y" }}
+  <h2>Interested in Contributing?</h2>
 
-{% if post.excerpt %}{{ post.excerpt }}{% endif %}
+  <p>If you'd like to contribute your own technical article to our collection, please check our <a href="/contributing">contribution guidelines</a> for details on our submission process and formatting requirements.</p>
+</article>
 
-[Read more →]({{ post.url | relative_url }})
-
----
-{% endfor %}
-
-## Interested in Contributing?
-
-If you'd like to contribute your own technical article to our collection, please check our [contribution guidelines](/contributing) for details on our submission process and formatting requirements. 
+<style>
+  .article-list {
+    margin: 2rem 0;
+  }
+  .article-item {
+    margin-bottom: 2rem;
+  }
+  .date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 1.5rem 0;
+  }
+</style> 

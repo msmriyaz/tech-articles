@@ -3,3 +3,14 @@ description: A collection of my technical writings.
 baseurl: "/tech-articles" # or "" if it is in the root of your username.github.io
 url: "https://msmriyaz.github.io/tech-articles" # or your root url
 # theme: minima # We're using our own custom styles instead
+
+# Permalink pattern for posts (ignores categories)
+permalink: /:year/:month/:day/:title:output_ext
+
+# Plugins
+plugins:
+  - jekyll-feed
+
+# Feed settings
+feed:
+  path: feed.xml
