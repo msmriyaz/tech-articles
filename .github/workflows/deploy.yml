@@ -22,13 +22,22 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Update Gemfile.lock platform
         run: bundle lock --add-platform x86_64-linux
 
       - name: Install dependencies
         run: bundle install
+
+      # Cache dependencies for future runs after fixing platform issue
+      - name: Cache Ruby gems
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
