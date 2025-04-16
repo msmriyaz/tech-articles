@@ -112,10 +112,15 @@
         padding: 0 16px;
         width: 100%;
         box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
       }
       
       .md-header__title-container {
-        max-width: 65%;
+        max-width: 60%;
+        min-width: 0;
+        flex-shrink: 1;
+        overflow: hidden;
       }
       
       .md-header__title {
@@ -123,11 +128,31 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 120px;
       }
       
       .md-header__right {
-        position: absolute;
-        right: 16px;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+      }
+      
+      .md-search__form {
+        width: 140px;
+      }
+      
+      /* Extra small devices */
+      @media screen and (max-width: 380px) {
+        .md-search__form {
+          width: 100px;
+        }
+      }
+      
+      /* Very small devices */
+      @media screen and (max-width: 320px) {
+        .md-search__form {
+          width: 80px;
+        }
       }
       
       .md-header__button {
@@ -358,20 +383,25 @@
   <!-- JavaScript for navigation and search -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu toggle
+      // Mobile menu toggle - simple implementation
       const menuToggle = document.getElementById('menu-toggle');
       const sidebar = document.getElementsByClassName('navigation-column')[0];
       const overlay = document.getElementById('md-overlay');
       
-      menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-      });
-      
-      overlay.addEventListener('click', function() {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-      });
+      if (menuToggle && sidebar && overlay) {
+        // Clean implementation for iOS compatibility
+        menuToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function() {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
       
       // Expand/collapse navigation sections
       const navParents = document.querySelectorAll('.md-nav__item--nested');
@@ -555,6 +585,86 @@
 
     // Theme switcher logic
     // ... existing code ...
+  </script>
+  
+  <!-- iOS Menu Fix -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fix for iOS menu interaction
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Toggle menu state
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          
+          // Prevent body scrolling when menu is open
+          document.body.classList.toggle('menu-active');
+          
+          // Force redraw on iOS
+          sidebar.style.display = 'none';
+          setTimeout(function() {
+            sidebar.style.display = 'block';
+          }, 0);
+        });
+        
+        // Ensure overlay closes menu
+        overlay.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-active');
+        });
+        
+        // Fix navigation links on iOS
+        const navLinks = document.querySelectorAll('.md-nav__link');
+        
+        navLinks.forEach(function(link) {
+          link.addEventListener('touchstart', function() {
+            this.style.backgroundColor = 'rgba(26, 115, 232, 0.1)';
+          });
+          
+          link.addEventListener('touchend', function() {
+            this.style.backgroundColor = '';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Added simple menu fix for iOS -->
+  <script>
+    /* Mobile menu fix for iOS */
+    (function() {
+      var menuBtn = document.getElementById('menu-toggle');
+      if (!menuBtn) return;
+      
+      var nav = document.querySelector('.navigation-column');
+      var overlay = document.getElementById('md-overlay');
+      
+      // Re-bind events to ensure they work
+      menuBtn.addEventListener('click', function(e) {
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+      
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          nav.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
+    })();
   </script>
 </body>
 </html>
