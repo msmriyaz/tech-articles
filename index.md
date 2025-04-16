@@ -9,16 +9,16 @@ Your Source for Insights on Emerging Tech and Industry Evolution.
 
 ## Welcome
 
-We are dedicated to exploring and illuminating the rapidly evolving landscape of technology. We provide in-depth analysis and practical insights into the promising technologies and industry trends that are shaping our future.
+I'm dedicated to exploring and illuminating the rapidly evolving landscape of technology. I provide in-depth analysis and practical insights into the promising technologies and industry trends that are shaping our future.
 
-Our mission is to empower developers, architects, and tech enthusiasts with the knowledge needed to understand and leverage these advancements. We aim to demystify complex concepts and provide actionable information, helping you stay ahead in a constantly changing technological environment.
+My mission is to empower developers, architects, and tech enthusiasts with the knowledge needed to understand and leverage these advancements. I aim to demystify complex concepts and provide actionable information, helping you stay ahead in a constantly changing technological environment.
 
-## What We Offer
+## What I Offer
 
-* **Exploration of Emerging Technologies:** We delve into the forefront of innovation, examining the technologies that will define tomorrow.
-* **Analysis of Industry Trends:** We provide critical insights into the shifts and changes impacting the tech industry.
-* **Practical Insights and Solutions:** We focus on delivering real-world applications and actionable knowledge.
-* **Architectural Perspectives:** We explore how to design and implement robust, scalable systems in the face of new technological challenges.
+* **Exploration of Emerging Technologies:** I delve into the forefront of innovation, examining the technologies that will define tomorrow.
+* **Analysis of Industry Trends:** I provide critical insights into the shifts and changes impacting the tech industry.
+* **Practical Insights and Solutions:** I focus on delivering real-world applications and actionable knowledge.
+* **Architectural Perspectives:** I explore how to design and implement robust, scalable systems in the face of new technological challenges.
 
 ## Recent Articles
 
@@ -26,8 +26,33 @@ Our mission is to empower developers, architects, and tech enthusiasts with the 
 - [{{ post.title }}]({{ post.url | relative_url }}) - {{ post.date | date: "%B %-d, %Y" }}
 {% endfor %}
 
-## Our Commitment
+## My Commitment
 
-We are committed to delivering high-quality, relevant content that fosters understanding and drives innovation. Whether you are looking to understand the latest AI advancements, navigate the complexities of cloud computing, or explore the potential of new architectural paradigms, we are your guide.
+I am committed to delivering high-quality, relevant content that fosters understanding and drives innovation. Whether you are looking to understand the latest AI advancements, navigate the complexities of cloud computing, or explore the potential of new architectural paradigms, I am your guide.
 
-Join us as we explore the future of technology, one insightful article at a time.
+Join me as I explore the future of technology, one insightful article at a time.
+
+## About the Author
+
+<div style="background-color: #f5f5f5; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+  <div style="display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
+    <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Author profile picture" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;" />
+
+    <div style="flex: 1; min-width: 250px;">
+      <p>
+        <strong>Riyaz Sheriff</strong> 
+        <a href="https://www.linkedin.com/in/riyazsheriff/" target="_blank" rel="noopener" style="display: inline-block; margin-left: 5px; vertical-align: middle;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn" width="18" height="18" style="vertical-align: middle;" />
+        </a>
+        is a seasoned cloud engineer and technology strategist with years of hands-on experience spanning software development, infrastructure automation, and architectural design. Having worked across multiple industries, including legal tech, finance, and enterprise IT, Riyaz brings a broad perspective on how technology shapes business outcomes.</p>
+
+      <p>Over the years, he has adapted to rapid shifts in tech—from bare metal to serverless, monoliths to microservices, and waterfall to agile. He's navigated successes and failures, learning firsthand how content gaps, brittle architecture, or mismatched tooling can derail even the best intentions.</p>
+
+      <p>Recently, Riyaz has been deeply involved in AI-driven infrastructure projects, developing innovative solutions that integrate machine learning models into CI/CD pipelines and implementing intelligent automation systems that adapt to changing workloads. His work in optimizing cloud resources for AI/ML training and inference has helped organizations reduce costs while scaling their AI capabilities.</p>
+
+      <p>As an advocate for responsible AI adoption, he's been pioneering approaches to infrastructure design that accommodate the unique demands of AI workloads—from specialized hardware provisioning to creating resilient, self-healing systems that ensure continuous operation of critical AI services.</p>
+
+      <p>Riyaz now focuses on building resilient, scalable, and future-proof solutions that align with real-world challenges. This blog is where those insights take shape—written with developers, architects, and curious minds in mind.</p>
+    </div>
+  </div>
+</div>
