@@ -690,7 +690,8 @@ code {
   background-color: $grey-color-light;
   
   @include media-query($on-palm) {
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
+    -webkit-text-size-adjust: none;
   }
 }
 
@@ -718,14 +719,17 @@ pre {
     min-width: 100%;
     
     @include media-query($on-palm) {
-      font-size: 0.75rem;
+      font-size: 0.75rem !important;
+      -webkit-text-size-adjust: none;
     }
   }
   
   @include media-query($on-palm) {
     width: 100%;
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
     padding: 0.75rem 0.6rem;
+    -webkit-text-size-adjust: 100%;
+    transform: translateZ(0);
   }
 }
 
@@ -1053,20 +1057,40 @@ article.post-content {
   
   @include media-query($on-palm) {
     pre {
-      font-size: 0.75rem;
+      font-size: 0.75rem !important;
       padding: 0.75rem 0.6rem;
       width: 100%;
       box-sizing: border-box;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      -webkit-text-size-adjust: none;
       
       code {
         font-size: 0.75rem !important;
+        -webkit-font-smoothing: antialiased;
       }
     }
     
     code {
-      font-size: 0.75rem;
+      font-size: 0.75rem !important;
+    }
+  }
+}
+
+// Fix Safari text size inconsistency in code blocks
+@media not all and (min-resolution:.001dpcm) { 
+  @supports (-webkit-appearance:none) {
+    pre, code {
+      @include media-query($on-palm) {
+        font-size: 0.75rem !important;
+        -webkit-text-size-adjust: none;
+      }
+    }
+    
+    pre > code {
+      @include media-query($on-palm) {
+        font-size: 0.75rem !important;
+      }
     }
   }
 } 
