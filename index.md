@@ -3,18 +3,18 @@ layout: default
 title: Navigating the Future of Technology
 ---
 
-<article>
+<article class="post-content">
   <h1>Navigating the Future of Technology</h1>
 
   <p>Your Source for Insights on Emerging Tech and Industry Evolution.</p>
 
-  <h2>Welcome</h2>
+  <h2 id="welcome">✨ Welcome</h2>
 
   <p>I'm dedicated to exploring and illuminating the rapidly evolving landscape of technology. I provide in-depth analysis and practical insights into the promising technologies and industry trends that are shaping our future.</p>
 
   <p>My mission is to empower developers, architects, and tech enthusiasts with the knowledge needed to understand and leverage these advancements. I aim to demystify complex concepts and provide actionable information, helping you stay ahead in a constantly changing technological environment.</p>
 
-  <h2>What I Offer</h2>
+  <h2 id="what-i-offer">🚀 What I Offer</h2>
 
   <ul>
     <li><strong>Exploration of Emerging Technologies:</strong> I delve into the forefront of innovation, examining the technologies that will define tomorrow.</li>
@@ -23,7 +23,7 @@ title: Navigating the Future of Technology
     <li><strong>Architectural Perspectives:</strong> I explore how to design and implement robust, scalable systems in the face of new technological challenges.</li>
   </ul>
 
-  <h2>Recent Articles</h2>
+  <h2 id="recent-articles">📚 Recent Articles</h2>
 
   <ul>
   {% for post in site.posts limit:5 %}
@@ -31,13 +31,13 @@ title: Navigating the Future of Technology
   {% endfor %}
   </ul>
 
-  <h2>My Commitment</h2>
+  <h2 id="my-commitment">⭐ My Commitment</h2>
 
   <p>I am committed to delivering high-quality, relevant content that fosters understanding and drives innovation. Whether you are looking to understand the latest AI advancements, navigate the complexities of cloud computing, or explore the potential of new architectural paradigms, I am your guide.</p>
 
   <p>Join me as I explore the future of technology, one insightful article at a time.</p>
 
-  <h2>About the Author</h2>
+  <h2 id="about-the-author">👨‍💻 About the Author</h2>
 
   <div style="background-color: #f5f5f5; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
     <div style="display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">

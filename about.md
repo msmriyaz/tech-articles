@@ -3,14 +3,14 @@ layout: default
 title: About This Documentation
 ---
 
-<article>
+<article class="post-content">
   <h1>About This Documentation</h1>
 
-  <h2>Purpose</h2>
+  <h2 id="purpose">🎯 Purpose</h2>
 
   <p>This technical documentation collection aims to provide clear, comprehensive, and practical guidance on various technical topics. Whether you're a beginner looking to learn new concepts or an experienced developer seeking to deepen your understanding, our articles are designed to help you progress in your technical journey.</p>
 
-  <h2>Our Approach</h2>
+  <h2 id="our-approach">🧭 Our Approach</h2>
 
   <p>We believe in a progressive learning approach, where concepts build upon each other in a logical sequence. Our articles are:</p>
 
@@ -21,11 +21,11 @@ title: About This Documentation
     <li><strong>Comprehensive</strong> - We cover topics from fundamental concepts to advanced techniques</li>
   </ul>
 
-  <h2>The Team</h2>
+  <h2 id="the-team">👥 The Team</h2>
 
   <p>This documentation is maintained by a team of experienced developers and technical writers who are passionate about sharing knowledge and helping others grow in their technical skills.</p>
 
-  <h2>Technology Stack</h2>
+  <h2 id="technology-stack">⚙️ Technology Stack</h2>
 
   <p>Our documentation site is built with:</p>
 
@@ -36,7 +36,7 @@ title: About This Documentation
     <li><a href="https://pages.github.com/">GitHub Pages</a> - For hosting and deployment</li>
   </ul>
 
-  <h2>Contact Us</h2>
+  <h2 id="contact-us">📬 Contact Us</h2>
 
   <p>If you have questions, suggestions, or feedback about our documentation, please <a href="/contact">contact us</a>. We're always looking to improve our content and welcome your input.</p>
 </article>

@@ -450,7 +450,8 @@
   <script>
     // Add ids to all headings for TOC links
     document.addEventListener('DOMContentLoaded', function() {
-      const headings = document.querySelectorAll('article h1, article h2, article h3');
+      // Target headings inside article tags
+      const headings = document.querySelectorAll('article h2, article h3, article h4');
       
       // First add IDs to all headings if they don't have one
       headings.forEach(function(heading) {
@@ -460,27 +461,62 @@
         }
       });
       
-      // Then populate the TOC if we're on a post page (not the homepage)
-      if (window.location.pathname !== '/' && document.getElementById('toc-list')) {
-        const tocList = document.getElementById('toc-list');
-        
-        headings.forEach(function(heading) {
-          // Skip the post title (h1)
-          if (heading.tagName !== 'H1') {
+      // Then populate the TOC if the toc-list element exists
+      const tocList = document.getElementById('toc-list');
+      
+      if (tocList) {
+        // Clear any existing content (needed for home page)
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/')) {
+          // For homepage, only show the page's own headings
+          // Get headings from the homepage article
+          const homePageHeadings = document.querySelectorAll('.post-content h2');
+          
+          // Remove existing entries if any
+          tocList.innerHTML = '';
+          
+          homePageHeadings.forEach(function(heading) {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             
-            // Add appropriate indentation for h3
-            if (heading.tagName === 'H3') {
-              listItem.style.marginLeft = '20px';
-            }
-            
             link.href = '#' + heading.id;
-            link.textContent = heading.textContent;
+            // Remove emoji prefixes for cleaner TOC
+            link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+            
             listItem.appendChild(link);
             tocList.appendChild(listItem);
+          });
+        } 
+        else if (document.querySelector('article')) {
+          // For post pages or other content pages
+          const articleHeadings = document.querySelectorAll('article h2, article h3');
+          
+          // Only populate if we have headings and we're not on the homepage
+          if (articleHeadings.length > 0) {
+            // Clear existing entries
+            tocList.innerHTML = '';
+            
+            articleHeadings.forEach(function(heading) {
+              // Skip headings that might be part of the metadata or title
+              // Skip the post title (h1)
+              if (heading.tagName !== 'H1') {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                
+                // Add appropriate indentation for h3
+                if (heading.tagName === 'H3') {
+                  listItem.style.marginLeft = '20px';
+                }
+                
+                link.href = '#' + heading.id;
+                // Clean up the emoji prefixes for TOC display
+                link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+                
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
+              }
+            });
           }
-        });
+        }
       }
     });
 

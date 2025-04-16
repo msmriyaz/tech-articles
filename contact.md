@@ -3,14 +3,14 @@ layout: default
 title: Contact Us
 ---
 
-<article>
+<article class="post-content">
   <h1>Contact Us</h1>
 
-  <h2>Get in Touch</h2>
+  <h2 id="get-in-touch">✉️ Get in Touch</h2>
 
   <p>We value your feedback and are here to help with any questions you might have about our technical documentation.</p>
 
-  <h2>How to Reach Us</h2>
+  <h2 id="how-to-reach-us">📞 How to Reach Us</h2>
 
   <p>You can contact our team through any of the following channels:</p>
 
@@ -20,7 +20,7 @@ title: Contact Us
     <li><strong>Twitter</strong>: <a href="https://twitter.com/techdocs">@techdocs</a></li>
   </ul>
 
-  <h2>Reporting Issues</h2>
+  <h2 id="reporting-issues">🐛 Reporting Issues</h2>
 
   <p>If you find a technical error, unclear explanation, or missing information in our documentation:</p>
 
@@ -36,15 +36,15 @@ title: Contact Us
     </li>
   </ol>
 
-  <h2>Contributing</h2>
+  <h2 id="contributing">🤝 Contributing</h2>
 
   <p>Interested in contributing to our documentation? We welcome your expertise! See our <a href="https://github.com/username/tech-articles/blob/main/CONTRIBUTING.md">contribution guidelines</a> to get started.</p>
 
-  <h2>Feature Requests</h2>
+  <h2 id="feature-requests">💡 Feature Requests</h2>
 
   <p>Have ideas for new topics or improvements to our existing content? We'd love to hear them! Please submit feature requests through our <a href="https://github.com/username/tech-articles/issues">GitHub repository</a> with the label "enhancement."</p>
 
   <hr>
 
-  <p>We aim to respond to all inquiries within 2 business days. Thank you for helping us improve our documentation!</p>
+  <p>We aim to respond to all inquiries within 2 business days. Thank you for helping us improve our documentation! ✨</p>
 </article>

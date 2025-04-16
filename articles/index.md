@@ -4,12 +4,12 @@ title: All Articles
 excerpt: Browse our complete collection of technical articles
 ---
 
-<article>
+<article class="post-content">
   <h1>All Technical Articles</h1>
   
   <p>This page provides an overview of all the technical articles in our collection. Browse the list to find topics that interest you or use the search function to find specific information.</p>
 
-  <h2>Article Categories</h2>
+  <h2 id="article-categories">📂 Article Categories</h2>
 
   <p>Our articles are organized into the following categories:</p>
 
@@ -20,14 +20,14 @@ excerpt: Browse our complete collection of technical articles
     <li><strong>Advanced Topics</strong> - In-depth articles for experienced readers</li>
   </ul>
 
-  <h2>Complete Article List</h2>
+  <h2 id="complete-article-list">📚 Complete Article List</h2>
 
   <div class="article-list">
     {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
     {% for post in sorted_posts %}
     <div class="article-item">
       <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-      <p class="date"><strong>Posted on:</strong> {{ post.date | date: "%B %-d, %Y" }}</p>
+      <p class="date"><strong>📅 Posted on:</strong> {{ post.date | date: "%B %-d, %Y" }}</p>
       {% if post.excerpt %}<p>{{ post.excerpt }}</p>{% endif %}
       <p><a href="{{ post.url | relative_url }}">Read more →</a></p>
       <hr>
@@ -35,7 +35,7 @@ excerpt: Browse our complete collection of technical articles
     {% endfor %}
   </div>
 
-  <h2>Interested in Contributing?</h2>
+  <h2 id="interested-in-contributing">✍️ Interested in Contributing?</h2>
 
   <p>If you'd like to contribute your own technical article to our collection, please check our <a href="/contributing">contribution guidelines</a> for details on our submission process and formatting requirements.</p>
 </article>
