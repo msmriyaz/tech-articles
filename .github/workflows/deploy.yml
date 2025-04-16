@@ -18,20 +18,26 @@ jobs:
           ref: authoring
           fetch-depth: 0
 
-      - name: Setup Ruby
+      # Install Ruby without bundler actions
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
+          # Do not use bundler-cache
           bundler-cache: false
-
-      - name: Update Gemfile.lock platform
-        run: bundle lock --add-platform x86_64-linux
-
+      
+      # Fix the platform issue directly
+      - name: Fix Gemfile.lock platform
+        run: |
+          gem install bundler -v 2.6.8
+          bundle lock --add-platform x86_64-linux
+      
+      # Now install dependencies manually
       - name: Install dependencies
         run: bundle install
-
-      # Cache dependencies for future runs after fixing platform issue
-      - name: Cache Ruby gems
+      
+      # Only cache after we've fixed the issue
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: vendor/bundle
