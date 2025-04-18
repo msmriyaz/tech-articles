@@ -43,6 +43,15 @@
       'content_category': contentCategory,
       'browser_info': browserInfo
     });
+    
+    // Send screen_view event for GA4 page/screen reporting
+    gtag('event', 'screen_view', {
+      'app_name': 'RZTech',
+      'screen_name': document.title,
+      'page_path': location.pathname,
+      'screen_class': contentCategory,
+      'browser_info': browserInfo
+    });
   </script>
   <!-- End Google Analytics -->
   
@@ -760,6 +769,24 @@
         platform: navigator.platform,
         vendor: navigator.vendor
       };
+      
+      // Handle page navigation events (for single-page applications or Ajax navigation)
+      // This helps with tracking screen views when URL changes via history API
+      let lastUrl = location.href; 
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          // Send a new screen_view event when the URL changes
+          gtag('event', 'screen_view', {
+            'app_name': 'RZTech',
+            'screen_name': document.title,
+            'page_path': location.pathname,
+            'screen_class': location.pathname.split('/')[1] || 'home',
+            'browser_info': browserInfo
+          });
+        }
+      }).observe(document, {subtree: true, childList: true});
 
       // Track navigation links
       const navLinks = document.querySelectorAll('.md-nav__link');
