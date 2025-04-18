@@ -15,7 +15,7 @@ layout: default
   "@type": "BlogPosting",
   "headline": "{{ page.title }}",
   "description": "{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}",
-  "image": "{{ site.url }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}",
+  "image": "{{ site.url }}{{ site.baseurl }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}",
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "author": {
@@ -27,12 +27,12 @@ layout: default
     "name": "{{ site.title }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ site.url }}{{ '/assets/images/logo.png' }}"
+      "url": "{{ site.url }}{{ site.baseurl }}{{ '/assets/images/logo.png' }}"
     }
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "{{ site.url }}{{ page.url | replace:'index.html','' }}"
+    "@id": "{{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}"
   }
 }
 </script>
