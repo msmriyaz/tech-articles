@@ -29,6 +29,13 @@
   <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}">
   
+  <!-- LinkedIn Specific -->
+  <meta name="linkedin:card" content="summary_large_image">
+  <meta name="linkedin:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="linkedin:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="linkedin:image" content="{{ site.url }}{{ site.baseurl }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}">
+  <meta name="author" content="Riyaz Sheriff">
+  
   <!-- WhatsApp Specific (helps with link previews) -->
   <meta property="og:image:alt" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta property="og:locale" content="en_US">
