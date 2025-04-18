@@ -8,6 +8,35 @@
   <meta name="author" content="Riyaz">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  
+  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDQE96RC7P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Set content category as custom dimension
+    var contentCategory = "home";
+    {% if page.categories %}
+      contentCategory = "{{ page.categories | first }}";
+    {% elsif page.url contains '/articles/' %}
+      contentCategory = "articles";
+    {% elsif page.url contains '/about/' %}
+      contentCategory = "about";
+    {% elsif page.url contains '/contact/' %}
+      contentCategory = "contact";
+    {% endif %}
+
+    gtag('config', 'G-YDQE96RC7P', {
+      'page_path': location.pathname,
+      'page_title': document.title,
+      'content_category': contentCategory
+    });
+  </script>
+  <!-- End Google Analytics -->
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -710,6 +739,167 @@
         });
       }
     })();
+  </script>
+
+  <!-- Google Analytics Event Tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track navigation links
+      const navLinks = document.querySelectorAll('.md-nav__link');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'navigation_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'link_url': this.href
+          });
+        });
+      });
+
+      // Track social media shares
+      const socialLinks = document.querySelectorAll('.content-column a[target="_blank"][title^="Share on"]');
+      socialLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const platform = this.getAttribute('title').replace('Share on ', '');
+          gtag('event', 'social_share', {
+            'event_category': 'Social',
+            'event_label': platform,
+            'page_path': location.pathname,
+            'page_title': document.title
+          });
+        });
+      });
+
+      // Track code copy
+      const copyButtons = document.querySelectorAll('.copy-button');
+      copyButtons.forEach(function(button, index) {
+        button.addEventListener('click', function() {
+          gtag('event', 'code_copy', {
+            'event_category': 'Content',
+            'event_label': 'Code Block ' + (index + 1),
+            'page_path': location.pathname
+          });
+        });
+      });
+
+      // Track search usage
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          const query = this.value.trim();
+          
+          if (query.length > 2) {
+            searchTimeout = setTimeout(function() {
+              gtag('event', 'search', {
+                'event_category': 'Search',
+                'search_term': query
+              });
+            }, 1000); // Wait 1 second after typing stops
+          }
+        });
+      }
+
+      // Track TOC clicks
+      const tocLinks = document.querySelectorAll('#toc-list a');
+      tocLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'toc_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'page_path': location.pathname
+          });
+        });
+      });
+
+      // Track external links
+      const allLinks = document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])');
+      allLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'external_link', {
+            'event_category': 'Outbound',
+            'event_label': this.href,
+            'page_path': location.pathname
+          });
+        });
+      });
+
+      // Enhanced page-specific tracking
+      {% if page.url == '/' or page.url == '/index.html' %}
+      // Homepage specific tracking
+      const featuredArticles = document.querySelectorAll('.post-content a[href^="/20"]');
+      featuredArticles.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'featured_article_click', {
+            'event_category': 'Homepage',
+            'event_label': this.textContent.trim(),
+            'article_url': this.href
+          });
+        });
+      });
+      {% endif %}
+
+      {% if page.layout == 'post' %}
+      // Article page specific tracking
+      // Track reading progress
+      const article = document.querySelector('article');
+      if (article) {
+        let readingProgressSent = {
+          '25%': false,
+          '50%': false,
+          '75%': false,
+          '100%': false
+        };
+        
+        window.addEventListener('scroll', function() {
+          const articleHeight = article.offsetHeight;
+          const articleTop = article.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+          const scrollPosition = -articleTop;
+          const scrollPercentage = Math.min(100, Math.round((scrollPosition / (articleHeight - windowHeight)) * 100));
+          
+          if (scrollPercentage >= 25 && !readingProgressSent['25%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '25%',
+              'article_title': document.title
+            });
+            readingProgressSent['25%'] = true;
+          }
+          
+          if (scrollPercentage >= 50 && !readingProgressSent['50%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '50%',
+              'article_title': document.title
+            });
+            readingProgressSent['50%'] = true;
+          }
+          
+          if (scrollPercentage >= 75 && !readingProgressSent['75%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '75%',
+              'article_title': document.title
+            });
+            readingProgressSent['75%'] = true;
+          }
+          
+          if (scrollPercentage >= 95 && !readingProgressSent['100%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '100%',
+              'article_title': document.title
+            });
+            readingProgressSent['100%'] = true;
+          }
+        });
+      }
+      {% endif %}
+    });
   </script>
 </body>
 </html>
