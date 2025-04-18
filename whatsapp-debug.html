@@ -1,0 +1,210 @@
+---
+layout: default
+title: WhatsApp Sharing Debug
+---
+
+<div class="container">
+  <h1>WhatsApp Sharing Debugger</h1>
+  
+  <div class="alert alert-info">
+    <p>Use this tool to test and troubleshoot WhatsApp sharing for your articles.</p>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Test WhatsApp Sharing</h5>
+      <form id="whatsapp-form" class="mb-3">
+        <div class="form-group">
+          <label for="urlInput">Article URL to share:</label>
+          <input type="url" class="form-control" id="urlInput" required 
+            placeholder="https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html">
+        </div>
+        
+        <div class="form-group mt-3">
+          <label for="titleInput">Title (optional):</label>
+          <input type="text" class="form-control" id="titleInput" 
+            placeholder="Leave blank to use page title">
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Generate WhatsApp Share Link</button>
+      </form>
+      
+      <div id="result" style="display: none;">
+        <h5 class="mt-4">WhatsApp Share Link</h5>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="waLink" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="copyLink()">Copy</button>
+            <a id="testLink" class="btn btn-success" href="#" target="_blank">Test on WhatsApp</a>
+          </div>
+        </div>
+        <div id="copyStatus" class="text-success mt-2" style="display: none;">Link copied to clipboard!</div>
+        
+        <h5 class="mt-4">Metadata Test</h5>
+        <p>Here's what WhatsApp should see when scraping this URL:</p>
+        <div id="metadataView" class="border p-3 bg-light">
+          <div class="mb-2">
+            <strong>URL:</strong> <span id="metaUrl"></span>
+          </div>
+          <div class="mb-2">
+            <strong>OG:Title:</strong> <span id="metaTitle"></span>
+          </div>
+          <div class="mb-2">
+            <strong>OG:Description:</strong> <span id="metaDesc"></span>
+          </div>
+          <div>
+            <strong>OG:Image:</strong> <span id="metaImage"></span>
+          </div>
+          <div class="mt-3">
+            <img id="previewImage" src="" alt="Preview image" style="max-width: 100%; max-height: 300px; display: none;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5>WhatsApp Image Preview Troubleshooting</h5>
+    </div>
+    <div class="card-body">
+      <p>If WhatsApp isn't showing image previews for your links, try these solutions:</p>
+      
+      <ol>
+        <li>
+          <strong>Verify your image exists and is accessible</strong>
+          <p>Paste your image URL in a browser to make sure it loads directly.</p>
+        </li>
+        <li>
+          <strong>Ensure image format is supported</strong>
+          <p>JPG, PNG, and WebP formats work best. Avoid SVG for previews.</p>
+        </li>
+        <li>
+          <strong>Check image size</strong>
+          <p>Images should be at least 300x200 pixels. Optimal size is 1200x630 pixels.</p>
+        </li>
+        <li>
+          <strong>Clear WhatsApp cache on your device</strong>
+          <p>Sometimes WhatsApp caches link previews. Try clearing the app cache or reinstalling.</p>
+        </li>
+        <li>
+          <strong>Use WhatsApp Web to test</strong>
+          <p>Sharing via WhatsApp Web sometimes shows previews differently than the mobile app.</p>
+        </li>
+        <li>
+          <strong>Wait for cache to refresh</strong>
+          <p>If you recently updated the image, give WhatsApp 24-48 hours to refresh its cache.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <h5>Meta Tags for WhatsApp</h5>
+    </div>
+    <div class="card-body">
+      <p>Your site includes these meta tags to optimize WhatsApp sharing:</p>
+      
+      <pre><code>&lt;meta property="og:image" content="https://example.com/image.jpg"&gt;
+&lt;meta property="og:image:secure_url" content="https://example.com/image.jpg"&gt;
+&lt;meta property="og:image:type" content="image/jpeg"&gt;
+&lt;meta property="og:image:width" content="1200"&gt;
+&lt;meta property="og:image:height" content="630"&gt;
+&lt;meta property="og:image:alt" content="Image description"&gt;</code></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('whatsapp-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const url = document.getElementById('urlInput').value.trim();
+    const customTitle = document.getElementById('titleInput').value.trim();
+    
+    if (!url) return;
+    
+    // Generate WhatsApp sharing link
+    let whatsappUrl = 'https://wa.me/?text=';
+    if (customTitle) {
+      whatsappUrl += encodeURIComponent(customTitle + ': ' + url);
+    } else {
+      whatsappUrl += encodeURIComponent('Check this out: ' + url);
+    }
+    
+    // Update UI
+    document.getElementById('waLink').value = whatsappUrl;
+    document.getElementById('testLink').href = whatsappUrl;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('copyStatus').style.display = 'none';
+    
+    // Fetch metadata for the URL
+    fetchMetadata(url);
+    
+    // Scroll to result
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  });
+  
+  async function fetchMetadata(url) {
+    try {
+      // In a real implementation, you'd need a proxy server to fetch the metadata
+      // For this demo, we'll simulate it with some placeholder data
+      
+      // In production, you'd use:
+      // const response = await fetch('/api/fetch-metadata?url=' + encodeURIComponent(url));
+      // const metadata = await response.json();
+      
+      // For demo purposes:
+      const metadata = {
+        url: url,
+        title: "{{ page.title }}",
+        description: "{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}",
+        image: "{{ site.url }}{{ site.baseurl }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}"
+      };
+      
+      document.getElementById('metaUrl').textContent = metadata.url;
+      document.getElementById('metaTitle').textContent = metadata.title;
+      document.getElementById('metaDesc').textContent = metadata.description;
+      document.getElementById('metaImage').textContent = metadata.image;
+      
+      const previewImage = document.getElementById('previewImage');
+      previewImage.src = metadata.image;
+      previewImage.style.display = 'block';
+      previewImage.onerror = function() {
+        previewImage.style.display = 'none';
+        document.getElementById('metaImage').innerHTML = metadata.image + ' <span class="text-danger">(Image not loading - this could be why WhatsApp preview is not working)</span>';
+      };
+      
+    } catch (error) {
+      console.error('Error fetching metadata:', error);
+      document.getElementById('metadataView').innerHTML = '<div class="text-danger">Error fetching metadata. Please check the URL.</div>';
+    }
+  }
+  
+  function copyLink() {
+    const waLink = document.getElementById('waLink');
+    waLink.select();
+    document.execCommand('copy');
+    
+    document.getElementById('copyStatus').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('copyStatus').style.display = 'none';
+    }, 2000);
+  }
+  
+  // Pre-fill form from URL parameters
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlParam = urlParams.get('url');
+    const titleParam = urlParams.get('title');
+    
+    if (urlParam) {
+      document.getElementById('urlInput').value = urlParam;
+      if (titleParam) {
+        document.getElementById('titleInput').value = titleParam;
+      }
+      document.getElementById('whatsapp-form').dispatchEvent(new Event('submit'));
+    }
+  });
+</script> 

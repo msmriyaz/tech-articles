@@ -33,8 +33,9 @@
   <meta property="og:image:alt" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta property="og:locale" content="en_US">
   
-  <!-- Facebook specific tags -->
-  <meta property="fb:app_id" content="your-fb-app-id"> <!-- Create a Facebook app and add the ID here -->
+  <!-- Additional WhatsApp-specific meta tags -->
+  <meta property="og:image:secure_url" content="{{ site.url }}{{ site.baseurl }}{% if page.image %}{{ page.image }}{% else %}{{ '/assets/images/og-default.jpg' }}{% endif %}">
+  <meta name="format-detection" content="telephone=no">
   
   <!-- Google Analytics -->
   <!-- Google tag (gtag.js) -->
@@ -345,7 +346,7 @@
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}&title={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}&summary={{ page.excerpt | strip_html | strip_newlines | truncate: 140 | url_encode }}" target="_blank" title="Share on LinkedIn">
                   <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://wa.me/?text={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}%20-%20{{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}" target="_blank" title="Share on WhatsApp">
+                <a href="https://wa.me/?text={% if page.title %}{{ page.title | url_encode }}:%20{% else %}{{ site.title | url_encode }}:%20{% endif %}{{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}" target="_blank" title="Share on WhatsApp">
                   <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp logo" style="vertical-align: middle;">
                 </a>
                 <a href="https://bsky.app/intent/compose?text={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}%20{{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}" target="_blank" title="Share on Bluesky">
