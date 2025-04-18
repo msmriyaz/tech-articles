@@ -29,10 +29,19 @@
       contentCategory = "contact";
     {% endif %}
 
+    // Get browser information
+    var browserInfo = {
+      name: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      vendor: navigator.vendor
+    };
+
     gtag('config', 'G-YDQE96RC7P', {
       'page_path': location.pathname,
       'page_title': document.title,
-      'content_category': contentCategory
+      'content_category': contentCategory,
+      'browser_info': browserInfo
     });
   </script>
   <!-- End Google Analytics -->
@@ -744,6 +753,14 @@
   <!-- Google Analytics Event Tracking -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Get browser information for events
+      var browserInfo = {
+        name: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        vendor: navigator.vendor
+      };
+
       // Track navigation links
       const navLinks = document.querySelectorAll('.md-nav__link');
       navLinks.forEach(function(link) {
@@ -752,7 +769,8 @@
           gtag('event', 'navigation_click', {
             'event_category': 'Navigation',
             'event_label': linkText,
-            'link_url': this.href
+            'link_url': this.href,
+            'browser_info': browserInfo
           });
         });
       });
@@ -766,7 +784,8 @@
             'event_category': 'Social',
             'event_label': platform,
             'page_path': location.pathname,
-            'page_title': document.title
+            'page_title': document.title,
+            'browser_info': browserInfo
           });
         });
       });
@@ -778,7 +797,8 @@
           gtag('event', 'code_copy', {
             'event_category': 'Content',
             'event_label': 'Code Block ' + (index + 1),
-            'page_path': location.pathname
+            'page_path': location.pathname,
+            'browser_info': browserInfo
           });
         });
       });
@@ -795,22 +815,38 @@
             searchTimeout = setTimeout(function() {
               gtag('event', 'search', {
                 'event_category': 'Search',
-                'search_term': query
+                'search_term': query,
+                'browser_info': browserInfo
               });
             }, 1000); // Wait 1 second after typing stops
           }
         });
       }
 
-      // Track TOC clicks
-      const tocLinks = document.querySelectorAll('#toc-list a');
+      // Track TOC clicks - Enhanced to catch all TOC links
+      const tocLinks = document.querySelectorAll('#toc-list a, .md-toc a, .table-of-contents a, article .toc a, [id*="toc"] a, [class*="toc"] a');
       tocLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
           const linkText = this.textContent.trim();
           gtag('event', 'toc_click', {
             'event_category': 'Navigation',
             'event_label': linkText,
-            'page_path': location.pathname
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track all page links within articles
+      const pageLinks = document.querySelectorAll('article a[href^="/"], article a[href^="./"], article a[href^="../"], article a[href^="#"]');
+      pageLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'page_link_click', {
+            'event_category': 'Internal Navigation',
+            'event_label': this.textContent.trim() || this.getAttribute('href'),
+            'link_url': this.getAttribute('href'),
+            'page_path': location.pathname,
+            'browser_info': browserInfo
           });
         });
       });
@@ -822,7 +858,8 @@
           gtag('event', 'external_link', {
             'event_category': 'Outbound',
             'event_label': this.href,
-            'page_path': location.pathname
+            'page_path': location.pathname,
+            'browser_info': browserInfo
           });
         });
       });
@@ -836,7 +873,8 @@
           gtag('event', 'featured_article_click', {
             'event_category': 'Homepage',
             'event_label': this.textContent.trim(),
-            'article_url': this.href
+            'article_url': this.href,
+            'browser_info': browserInfo
           });
         });
       });
@@ -865,7 +903,8 @@
             gtag('event', 'reading_progress', {
               'event_category': 'Article',
               'event_label': '25%',
-              'article_title': document.title
+              'article_title': document.title,
+              'browser_info': browserInfo
             });
             readingProgressSent['25%'] = true;
           }
@@ -874,7 +913,8 @@
             gtag('event', 'reading_progress', {
               'event_category': 'Article',
               'event_label': '50%',
-              'article_title': document.title
+              'article_title': document.title,
+              'browser_info': browserInfo
             });
             readingProgressSent['50%'] = true;
           }
@@ -883,7 +923,8 @@
             gtag('event', 'reading_progress', {
               'event_category': 'Article',
               'event_label': '75%',
-              'article_title': document.title
+              'article_title': document.title,
+              'browser_info': browserInfo
             });
             readingProgressSent['75%'] = true;
           }
@@ -892,7 +933,8 @@
             gtag('event', 'reading_progress', {
               'event_category': 'Article',
               'event_label': '100%',
-              'article_title': document.title
+              'article_title': document.title,
+              'browser_info': browserInfo
             });
             readingProgressSent['100%'] = true;
           }
