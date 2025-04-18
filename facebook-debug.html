@@ -1,0 +1,79 @@
+---
+layout: default
+title: Facebook Sharing Debugger
+---
+
+<div class="container">
+  <h1>Facebook Sharing Debugger</h1>
+  
+  <div class="alert alert-info">
+    <p>If you're having trouble with how your links appear when shared on Facebook, follow these steps:</p>
+  </div>
+  
+  <ol class="my-4">
+    <li class="mb-3">
+      <strong>Visit the Facebook Sharing Debugger Tool</strong>
+      <p>Go to <a href="https://developers.facebook.com/tools/debug/" target="_blank">https://developers.facebook.com/tools/debug/</a></p>
+    </li>
+    
+    <li class="mb-3">
+      <strong>Enter the URL of your article</strong>
+      <p>Copy and paste the complete URL of the page you want to share</p>
+    </li>
+    
+    <li class="mb-3">
+      <strong>Click "Debug"</strong>
+      <p>Facebook will analyze your page and show you what information it can extract</p>
+    </li>
+    
+    <li class="mb-3">
+      <strong>Click "Scrape Again"</strong>
+      <p>This forces Facebook to clear its cache and fetch the latest version of your page</p>
+      <p>You may need to click this button 2-3 times for the changes to take effect</p>
+    </li>
+    
+    <li class="mb-3">
+      <strong>Check the preview</strong>
+      <p>Make sure your title, description, and image appear correctly in the preview</p>
+    </li>
+  </ol>
+  
+  <h2>Why is this necessary?</h2>
+  <p>Facebook caches information about your links. When you update your website, Facebook may continue showing old information until you manually refresh the cache using their debugger tool.</p>
+  
+  <h2>Common Issues</h2>
+  <ul>
+    <li><strong>Missing Image:</strong> Make sure your article has a valid image specified in the front matter</li>
+    <li><strong>Wrong Title/Description:</strong> Check the meta tags in the page's HTML</li>
+    <li><strong>Page Not Found:</strong> Ensure the URL is valid and the page is publicly accessible</li>
+  </ul>
+  
+  <h2>Testing Your Links</h2>
+  <p>Before sharing important content, always test how it will appear using these tools:</p>
+  
+  <div class="card-deck my-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Facebook Debugger</h5>
+        <p class="card-text">Tests Facebook, Instagram, and Messenger sharing</p>
+        <a href="https://developers.facebook.com/tools/debug/" target="_blank" class="btn btn-primary">Open Tool</a>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Twitter Card Validator</h5>
+        <p class="card-text">Tests how links appear on Twitter</p>
+        <a href="https://cards-dev.twitter.com/validator" target="_blank" class="btn btn-primary">Open Tool</a>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">LinkedIn Post Inspector</h5>
+        <p class="card-text">Tests how links appear on LinkedIn</p>
+        <a href="https://www.linkedin.com/post-inspector/" target="_blank" class="btn btn-primary">Open Tool</a>
+      </div>
+    </div>
+  </div>
+</div> 
