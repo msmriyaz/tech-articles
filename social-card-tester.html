@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Card Preview Tool</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-top: 0;
+      color: #1a73e8;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    button:hover {
+      background-color: #0d61cb;
+    }
+    .preview-section {
+      margin-top: 30px;
+    }
+    .preview-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .preview-header {
+      background-color: #f0f2f5;
+      padding: 10px 15px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+    .preview-body {
+      padding: 0;
+    }
+    .preview-image {
+      width: 100%;
+      display: block;
+    }
+    .preview-content {
+      padding: 15px;
+    }
+    .preview-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    .preview-desc {
+      color: #606770;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .preview-url {
+      color: #606770;
+      font-size: 12px;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+    .tip {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-left: 4px solid #1a73e8;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Social Media Card Preview Tool</h1>
+    <p>Enter your article details below to see how they would appear on different social platforms.</p>
+    
+    <div class="tip">
+      <strong>Tip:</strong> This tool simulates how your meta tags might render on social platforms. Actual appearance may vary. For definitive testing, use platform-specific tools like:
+      <ul>
+        <li><a href="https://developers.facebook.com/tools/debug/" target="_blank">Facebook Sharing Debugger</a></li>
+        <li><a href="https://cards-dev.twitter.com/validator" target="_blank">Twitter Card Validator</a></li>
+        <li><a href="https://www.linkedin.com/post-inspector/" target="_blank">LinkedIn Post Inspector</a></li>
+      </ul>
+    </div>
+    
+    <form id="preview-form">
+      <div>
+        <label for="page-url">Page URL:</label>
+        <input type="url" id="page-url" placeholder="https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html" required>
+      </div>
+      
+      <div>
+        <label for="page-title">Page Title:</label>
+        <input type="text" id="page-title" placeholder="RAG Evolution: Applications & Future Pathways" required>
+      </div>
+      
+      <div>
+        <label for="page-description">Page Description:</label>
+        <textarea id="page-description" rows="3" placeholder="An in-depth exploration of how RAG is transforming industries..." required></textarea>
+      </div>
+      
+      <div>
+        <label for="page-image">Image URL:</label>
+        <input type="url" id="page-image" placeholder="https://msmriyaz.github.io/tech-articles/assets/images/articles/2025/rag/rag_knowledge-reading.jpg" required>
+      </div>
+      
+      <button type="submit">Generate Previews</button>
+    </form>
+    
+    <div class="preview-section" id="previews-container" style="display: none;">
+      <h2>Preview on Different Platforms</h2>
+      
+      <!-- Facebook Preview -->
+      <div class="preview-card">
+        <div class="preview-header">Facebook</div>
+        <div class="preview-body">
+          <img id="fb-image" class="preview-image" src="" alt="Preview image">
+          <div class="preview-content">
+            <div id="fb-title" class="preview-title"></div>
+            <div id="fb-desc" class="preview-desc"></div>
+            <div id="fb-url" class="preview-url"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Twitter Preview -->
+      <div class="preview-card">
+        <div class="preview-header">Twitter / X</div>
+        <div class="preview-body">
+          <img id="tw-image" class="preview-image" src="" alt="Preview image">
+          <div class="preview-content">
+            <div id="tw-title" class="preview-title"></div>
+            <div id="tw-desc" class="preview-desc"></div>
+            <div id="tw-url" class="preview-url"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- LinkedIn Preview -->
+      <div class="preview-card">
+        <div class="preview-header">LinkedIn</div>
+        <div class="preview-body">
+          <img id="li-image" class="preview-image" src="" alt="Preview image">
+          <div class="preview-content">
+            <div id="li-title" class="preview-title"></div>
+            <div id="li-desc" class="preview-desc"></div>
+            <div id="li-url" class="preview-url"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- WhatsApp Preview -->
+      <div class="preview-card">
+        <div class="preview-header">WhatsApp</div>
+        <div class="preview-body">
+          <img id="wa-image" class="preview-image" src="" alt="Preview image">
+          <div class="preview-content">
+            <div id="wa-title" class="preview-title"></div>
+            <div id="wa-desc" class="preview-desc"></div>
+            <div id="wa-url" class="preview-url"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="error-container" class="error" style="display: none;"></div>
+  </div>
+  
+  <script>
+    document.getElementById('preview-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const url = document.getElementById('page-url').value;
+      const title = document.getElementById('page-title').value;
+      const description = document.getElementById('page-description').value;
+      const image = document.getElementById('page-image').value;
+      
+      // Validate inputs
+      if (!url || !title || !description || !image) {
+        showError('Please fill out all fields');
+        return;
+      }
+      
+      // Update all previews
+      updatePreview('fb', title, description, url, image);
+      updatePreview('tw', title, description, url, image);
+      updatePreview('li', title, description, url, image);
+      updatePreview('wa', title, description, url, image);
+      
+      // Show previews
+      document.getElementById('previews-container').style.display = 'block';
+      document.getElementById('error-container').style.display = 'none';
+    });
+    
+    function updatePreview(platform, title, description, url, image) {
+      // Different platforms may truncate differently
+      let platformTitle = title;
+      let platformDesc = description;
+      
+      // Platform-specific modifications
+      switch(platform) {
+        case 'fb':
+          platformTitle = truncateText(title, 90);
+          platformDesc = truncateText(description, 200);
+          break;
+        case 'tw':
+          platformTitle = truncateText(title, 70);
+          platformDesc = truncateText(description, 125);
+          break;
+        case 'li':
+          platformTitle = truncateText(title, 70);
+          platformDesc = truncateText(description, 150);
+          break;
+        case 'wa':
+          platformTitle = truncateText(title, 60);
+          platformDesc = truncateText(description, 80);
+          break;
+      }
+      
+      // Update DOM
+      document.getElementById(`${platform}-image`).src = image;
+      document.getElementById(`${platform}-title`).textContent = platformTitle;
+      document.getElementById(`${platform}-desc`).textContent = platformDesc;
+      document.getElementById(`${platform}-url`).textContent = getHostname(url);
+    }
+    
+    function truncateText(text, maxLength) {
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength - 3) + '...';
+    }
+    
+    function getHostname(url) {
+      try {
+        return new URL(url).hostname;
+      } catch (e) {
+        return url;
+      }
+    }
+    
+    function showError(message) {
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.textContent = message;
+      errorContainer.style.display = 'block';
+      document.getElementById('previews-container').style.display = 'none';
+    }
+    
+    // Pre-fill form with example data
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('page-url').value = 'https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html';
+      document.getElementById('page-title').value = 'RAG Evolution: Applications & Future Pathways';
+      document.getElementById('page-description').value = 'An in-depth exploration of how RAG is transforming industries, from legal services to healthcare, with insights into technical challenges and future directions.';
+      document.getElementById('page-image').value = 'https://msmriyaz.github.io/tech-articles/assets/images/articles/2025/rag/rag_knowledge-reading.jpg';
+    });
+  </script>
+</body>
+</html> 

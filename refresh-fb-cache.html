@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb#">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Refresh Facebook Cache | RZTech</title>
+  <meta name="description" content="A collection of my technical writings.">
+  <meta name="author" content="Riyaz">
+  <!-- Canonical URL - manually constructed -->
+  <link rel="canonical" href="https://msmriyaz.github.io/tech-articles/refresh-fb-cache.html">
+  <link rel="stylesheet" href="/tech-articles/assets/css/style.css">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Refresh Facebook Cache">
+  <meta property="og:description" content="A collection of my technical writings.">
+  <!-- OG URL - manually constructed -->
+  <meta property="og:url" content="https://msmriyaz.github.io/tech-articles/refresh-fb-cache.html">
+  <meta property="og:site_name" content="RZTech">
+  <!-- Image - manually constructed -->
+  <meta property="og:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Refresh Facebook Cache">
+  <meta name="twitter:description" content="A collection of my technical writings.">
+  <meta name="twitter:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  
+  <!-- LinkedIn Specific -->
+  <meta name="linkedin:card" content="summary_large_image">
+  <meta name="linkedin:title" content="Refresh Facebook Cache">
+  <meta name="linkedin:description" content="A collection of my technical writings.">
+  <meta name="linkedin:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta name="author" content="Riyaz Sheriff">
+  
+  <!-- WhatsApp Specific (helps with link previews) -->
+  <meta property="og:image:alt" content="Refresh Facebook Cache">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- Additional WhatsApp-specific meta tags -->
+  <meta property="og:image:secure_url" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDQE96RC7P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Set content category as custom dimension
+    var contentCategory = "home";
+    
+
+    // Get browser information
+    var browserInfo = {
+      name: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      vendor: navigator.vendor
+    };
+
+    gtag('config', 'G-YDQE96RC7P', {
+      'page_path': location.pathname,
+      'page_title': document.title,
+      'content_category': contentCategory,
+      'browser_info': browserInfo
+    });
+    
+    // Send screen_view event for GA4 page/screen reporting
+    gtag('event', 'screen_view', {
+      'app_name': 'RZTech',
+      'screen_name': document.title,
+      'page_path': location.pathname,
+      'screen_class': contentCategory,
+      'browser_info': browserInfo
+    });
+  </script>
+  <!-- End Google Analytics -->
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Sans is loaded through CSS @font-face rules for better performance -->
+  
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="RZTech" href="/tech-articles/feed.xml">
+  <!-- Favicon -->
+  <link rel="icon" href="/tech-articles/assets/images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/tech-articles/assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- Inline CSS for navigation -->
+  <style>
+    /* Remove default triangle indicators */
+    .dropdown-icon, 
+    .dropdown-toggle:after,
+    .nav-triangle {
+      display: none !important;
+    }
+    
+    /* Add scroll margin for anchor points */
+    h2, h3, h4 {
+      scroll-margin-top: 80px;
+    }
+    
+    /* Add down arrows only to top-level items with dropdown */
+    .md-nav__list > .md-nav__item--nested > .md-nav__link::after {
+      content: "▼";
+      display: inline-block !important;
+      margin-left: 4px;
+      font-size: 0.6em;
+      vertical-align: middle;
+      color: #666;
+    }
+    
+    /* Make sure no other arrows appear */
+    .md-nav__list--nested .md-nav__link::after,
+    .md-nav__list--nested .md-nav__link::before {
+      display: none !important;
+    }
+    
+    /* Main navigation styling */
+    .md-nav__list > .md-nav__item > .md-nav__link {
+      font-weight: 500;
+      font-size: 0.95em;
+      padding: 0.5rem 0;
+      color: #333;
+    }
+    /* Remove only specific pseudo-elements */
+    .md-nav__item a::before {
+      display: none !important;
+    }
+    /* Remove bullet points from table of contents */
+    .md-toc ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+    .md-toc li {
+      margin-bottom: 0.5rem;
+    }
+    /* Style table of contents links */
+    .md-toc a {
+      color: #5f6368; /* Gray text */
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .md-toc a:hover,
+    .md-toc a:active,
+    .md-toc a.active {
+      color: #1a73e8; /* Blue on hover/active */
+      text-decoration: none;
+    }
+    /* Code block styles with copy button */
+    pre {
+      position: relative;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      color: #6e7781;
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .copy-button:hover {
+      background-color: #f3f4f6;
+      color: #1a73e8;
+    }
+    .copy-button.copied {
+      background-color: #e6f4ea;
+      color: #137333;
+      border-color: #137333;
+    }
+    /* Improve mobile header layout */
+    @media screen and (max-width: 767px) {
+      .md-header__inner {
+        padding: 0 16px;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .md-header__title-container {
+        max-width: 60%;
+        min-width: 0;
+        flex-shrink: 1;
+        overflow: hidden;
+      }
+      
+      .md-header__title {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+      }
+      
+      .md-header__right {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+      }
+      
+      .md-search__form {
+        width: 140px;
+      }
+      
+      /* Extra small devices */
+      @media screen and (max-width: 380px) {
+        .md-search__form {
+          width: 100px;
+        }
+      }
+      
+      /* Very small devices */
+      @media screen and (max-width: 320px) {
+        .md-search__form {
+          width: 80px;
+        }
+      }
+      
+      .md-header__button {
+        margin-left: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="md-header" data-md-component="header">
+    <nav class="md-header__inner">
+      <!-- Header title with logo on left -->
+      <div class="md-header__title-container">
+        <div class="md-header__logo">
+          <a href="/tech-articles/" title="RZTech">
+            <img src="/tech-articles/assets/images/logo.png" alt="RZTech logo" height="32">
+            <span class="md-header__title">RZTech</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side items -->
+      <div class="md-header__right">
+        <!-- Search -->
+        <div class="md-search" data-md-component="search">
+          <div class="md-search__form">
+            <input id="search-input" class="md-search__input" type="search" placeholder="Search" aria-label="Search">
+            <label class="md-search__icon" for="search-input">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16a6.5 6.5 0 0 1-6.5-6.5A6.5 6.5 0 0 1 9.5 3m0 2A4.5 4.5 0 0 0 5 9.5a4.5 4.5 0 0 0 4.5 4.5 4.5 4.5 0 0 0 4.5-4.5A4.5 4.5 0 0 0 9.5 5Z"/>
+              </svg>
+            </label>
+          </div>
+          <div id="search-results" class="md-search__output">
+            <div class="md-search__result">
+              <!-- Search results will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <label class="md-header__button" id="menu-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+          </svg>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <div class="md-container">
+    <main class="md-main">
+      <!-- Mobile overlay -->
+      <div id="md-overlay" class="md-overlay"></div>
+      
+      <!-- Main content with grid layout -->
+      <div class="md-content" id="md-content">
+        <div class="md-content__inner">
+          <!-- Three-column grid layout -->
+          <div class="grid-container">
+            <!-- Navigation column -->
+            <div class="grid-item navigation-column">
+              <nav class="md-nav">
+                <ul class="md-nav__list">
+                  <li class="md-nav__item">
+                    <a href="/tech-articles/" class="md-nav__link ">Home</a>
+                  </li>
+                  
+                  <!-- Articles section with dropdown -->
+                  <li class="md-nav__item md-nav__item--nested ">
+                    <a href="/tech-articles/articles/" class="md-nav__link dropdown-toggle">
+                      All Articles
+                    </a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      
+                        <li class="md-nav__item">
+                          <a href="/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html" class="md-nav__link ">
+                            RAG Evolution: Applications & Future Pathways
+                          </a>
+                        </li>
+                      
+                        <li class="md-nav__item">
+                          <a href="/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html" class="md-nav__link ">
+                            Building a Modern Tech Blog with Jekyll
+                          </a>
+                        </li>
+                      
+                    </ul>
+                  </li>
+                  
+                  <!-- Pages section -->
+                  <li class="md-nav__item md-nav__item--nested">
+                    <a href="javascript:void(0);" class="md-nav__link dropdown-toggle">
+                      Pages
+                    </a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/about" class="md-nav__link ">About</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/contact" class="md-nav__link ">Contact</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            
+            <!-- Middle content column -->
+            <div class="grid-item content-column">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem;">
+                <!-- Share Text -->
+                <span style="font-weight: bold;">Share to:</span>
+
+                <!-- Social Media Links -->
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html&title=Refresh+Facebook+Cache&summary=" target="_blank" title="Share on LinkedIn">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://wa.me/?text=Refresh+Facebook+Cache:%20https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html" target="_blank" title="Share on WhatsApp">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://bsky.app/intent/compose?text=Refresh+Facebook+Cache%20https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html" target="_blank" title="Share on Bluesky">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html&text=Refresh+Facebook+Cache" target="_blank" title="Share on X (Twitter)">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://reddit.com/submit?url=https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html&title=Refresh+Facebook+Cache" target="_blank" title="Share on Reddit">
+                  <img width="26px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://msmriyaz.github.io/tech-articles%2Frefresh-fb-cache.html&quote=Refresh+Facebook+Cache" target="_blank" title="Share on Facebook">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
+                </a>
+              </div>
+              
+              <div class="container">
+  <h1>Refresh Facebook Cache</h1>
+  
+  <div class="alert alert-warning">
+    <p><strong>Important:</strong> If your links are showing "Page not found" on Facebook, use this tool to refresh Facebook's cache.</p>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Step 1: Enter the URL to refresh</h5>
+      <form id="refresh-form" class="mb-3">
+        <div class="form-group">
+          <label for="urlInput">Article URL:</label>
+          <input type="url" class="form-control" id="urlInput" required 
+            placeholder="https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Generate Facebook Debug URL</button>
+      </form>
+      
+      <div id="result" style="display: none;">
+        <h5 class="card-title">Step 2: Click the link below to refresh the cache</h5>
+        <p>Open this link and click "Scrape Again" button on Facebook's debugger page:</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="debugUrl" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="copyDebugUrl()">Copy</button>
+            <a id="debugLink" class="btn btn-primary" href="#" target="_blank">Open Debugger</a>
+          </div>
+        </div>
+        <div id="copyStatus" class="text-success" style="display: none;">URL copied to clipboard!</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5>Why is this necessary?</h5>
+    </div>
+    <div class="card-body">
+      <p>Facebook caches information about your URLs. When you update your site, Facebook may continue to show old information or "Page not found" errors until you manually refresh the cache.</p>
+      
+      <h6>Common Issues</h6>
+      <ul>
+        <li><strong>Page not found:</strong> Facebook is trying to access a URL that doesn't exist or has been cached incorrectly</li>
+        <li><strong>Wrong image:</strong> Facebook is showing an old or incorrect image for your link</li>
+        <li><strong>Missing/wrong title or description:</strong> Facebook is using old metadata</li>
+      </ul>
+      
+      <h6>How to fix:</h6>
+      <ol>
+        <li>Use the tool above to generate a Facebook Debugger link for your URL</li>
+        <li>Open the link and click "Scrape Again" on Facebook's page</li>
+        <li>You may need to click "Scrape Again" 2-3 times for the changes to take effect</li>
+        <li>Verify that your page information looks correct in the preview</li>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <h5>URL Construction Table</h5>
+    </div>
+    <div class="card-body">
+      <p>This table shows how URLs should be constructed on this site:</p>
+      
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Component</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>site.url</td>
+              <td><code>https://msmriyaz.github.io</code></td>
+            </tr>
+            <tr>
+              <td>site.baseurl</td>
+              <td><code>/tech-articles</code></td>
+            </tr>
+            <tr>
+              <td>Correct article URL format</td>
+              <td><code>https://msmriyaz.github.io/tech-articles/YEAR/MONTH/DAY/title.html</code></td>
+            </tr>
+            <tr>
+              <td>Example</td>
+              <td><code>https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('refresh-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) return;
+    
+    // Generate Facebook debugger URL
+    const debugUrl = 'https://developers.facebook.com/tools/debug/?q=' + encodeURIComponent(url);
+    
+    // Update UI
+    document.getElementById('debugUrl').value = debugUrl;
+    document.getElementById('debugLink').href = debugUrl;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('copyStatus').style.display = 'none';
+    
+    // Scroll to result
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  });
+  
+  function copyDebugUrl() {
+    const debugUrl = document.getElementById('debugUrl');
+    debugUrl.select();
+    document.execCommand('copy');
+    
+    document.getElementById('copyStatus').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('copyStatus').style.display = 'none';
+    }, 2000);
+  }
+  
+  // Pre-fill the URL from the query parameter if present
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlParam = urlParams.get('url');
+    
+    if (urlParam) {
+      document.getElementById('urlInput').value = urlParam;
+      document.getElementById('refresh-form').dispatchEvent(new Event('submit'));
+    }
+  });
+</script> 
+            </div>
+            
+            <!-- Table of contents column -->
+            <div class="grid-item toc-column">
+              <div class="md-toc">
+                <h2>Table of Contents</h2>
+                <ul id="toc-list">
+                  
+                    <!-- Dynamic TOC will be populated by JavaScript -->
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add code copy button script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all code blocks
+      const codeBlocks = document.querySelectorAll('pre');
+      
+      // Add copy button to each code block
+      codeBlocks.forEach(function(codeBlock) {
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-button';
+        copyButton.textContent = 'Copy';
+        
+        // Add button to code block
+        codeBlock.appendChild(copyButton);
+        
+        // Add click event listener to copy button
+        copyButton.addEventListener('click', function() {
+          // Get the code content
+          const code = codeBlock.querySelector('code') 
+            ? codeBlock.querySelector('code').innerText 
+            : codeBlock.innerText;
+          
+          // Copy to clipboard
+          navigator.clipboard.writeText(code).then(function() {
+            // Update button state to show success
+            copyButton.textContent = 'Copied!';
+            copyButton.classList.add('copied');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+              copyButton.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy text: ', err);
+            copyButton.textContent = 'Failed';
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+      });
+    });
+  </script>
+
+  <!-- Search data -->
+  <script type="application/json" id="search-data">
+  
+  [          {        "title": "RAG Evolution: Applications & Future Pathways",        "url": "/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html",        "content": "When I first tested the RAG system in the beginning of January 2024, it felt like a pet project—an experiment to see if I could simply extract the ...",        "excerpt": "An in-depth exploration of how RAG is transforming industries, from legal services to healthcare, with insights into technical challenges and future directions."      },          {        "title": "Building a Modern Tech Blog with Jekyll",        "url": "/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html",        "content": "As I launch this new blog, I wanted to share my experience building a modern technical publishing platform using Jekyll. Whether you’re a developer...",        "excerpt": "A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies."      }                      ,      {        "title": "About This Documentation",        "url": "/tech-articles/about.html",        "content": "    🎯 Purpose  This technical documentation collection aims to provide clear, comprehensive, and practical guidance on various technical topics. Wh...",        "excerpt": ""      },                {        "title": "Contact Me",        "url": "/tech-articles/contact.html",        "content": "    ✉️ Get in Touch  I value your feedback and am here to help with any questions you might have about my technical documentation.  📞 How to Reach ...",        "excerpt": ""      },                {        "title": "Facebook Sharing Debugger",        "url": "/tech-articles/facebook-debug.html",        "content": "  Facebook Sharing Debugger        If you're having trouble with how your links appear when shared on Facebook, follow these steps:                ...",        "excerpt": ""      },                {        "title": "Refresh Facebook Cache",        "url": "/tech-articles/refresh-fb-cache.html",        "content": "  Refresh Facebook Cache        Important: If your links are showing \"Page not found\" on Facebook, use this tool to refresh Facebook's cache.      ...",        "excerpt": ""      },                {        "title": "WhatsApp Sharing Debug",        "url": "/tech-articles/whatsapp-debug.html",        "content": "  WhatsApp Sharing Debugger        Use this tool to test and troubleshoot WhatsApp sharing for your articles.                Test WhatsApp Sharing ...",        "excerpt": ""      }      ]
+  </script>
+
+  <!-- JavaScript for navigation and search -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle - simple implementation
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      if (menuToggle && sidebar && overlay) {
+        // Clean implementation for iOS compatibility
+        menuToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function() {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
+      
+      // Expand/collapse navigation sections
+      const navParents = document.querySelectorAll('.md-nav__item--nested');
+      
+      navParents.forEach(function(parent) {
+        const parentLink = parent.querySelector('.md-nav__link');
+        
+        // Automatically expand the All Articles section on relevant pages
+        if (parentLink.textContent.trim() === 'All Articles' && 
+            (window.location.pathname.includes('/articles/') || 
+             document.querySelector('.md-content').classList.contains('post'))) {
+          parent.classList.add('md-nav__item--expanded');
+        }
+        
+        parentLink.addEventListener('click', function(e) {
+          if (parentLink.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 768) {
+            e.preventDefault();
+            
+            // If this is not the clicked item, close it
+            navParents.forEach(function(otherParent) {
+              if (otherParent !== parent) {
+                otherParent.classList.remove('md-nav__item--expanded');
+              }
+            });
+            
+            // Toggle the clicked item
+            parent.classList.toggle('md-nav__item--expanded');
+          }
+        });
+      });
+      
+      // Add ID attributes to headings for deep linking
+      const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+      
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Search functionality
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      const searchResultsContainer = searchResults.querySelector('.md-search__result');
+      
+      // Parse posts data from the data attribute set by Jekyll
+      const allPosts = JSON.parse(document.getElementById('search-data').textContent);
+      
+      // Position search results better on mobile
+      function positionSearchResults() {
+        // For mobile devices
+        if (window.innerWidth <= 768) {
+          // Make sure search results appear in the viewport
+          const searchRect = searchInput.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          
+          // Position results to be visible
+          searchResults.style.maxHeight = (window.innerHeight - searchRect.bottom - 20) + 'px';
+          
+          // Disable body scrolling when search is open
+          if (searchResults.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.body.style.overflow = '';
+          }
+        } else {
+          // Reset for desktop
+          searchResults.style.maxHeight = '';
+          document.body.style.overflow = '';
+        }
+      }
+      
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+          return;
+        }
+        
+        // Perform search
+        const results = allPosts.filter(post => {
+          return post.title.toLowerCase().includes(query) || 
+                 post.content.toLowerCase().includes(query) ||
+                 (post.excerpt && post.excerpt.toLowerCase().includes(query));
+        });
+        
+        // Display results
+        searchResultsContainer.innerHTML = '';
+        searchResults.classList.add('active');
+        
+        // Position search results properly
+        positionSearchResults();
+        
+        if (results.length === 0) {
+          searchResultsContainer.innerHTML = '<div class="md-search__no-results">No matching documents</div>';
+          return;
+        }
+        
+        // Limit results on mobile
+        const displayResults = window.innerWidth <= 768 ? results.slice(0, 5) : results;
+        
+        displayResults.forEach(result => {
+          const resultItem = document.createElement('a');
+          resultItem.className = 'md-search__result-item';
+          resultItem.href = result.url;
+          
+          const title = document.createElement('div');
+          title.className = 'md-search__result-title';
+          title.textContent = result.title;
+          
+          const excerpt = document.createElement('div');
+          excerpt.className = 'md-search__result-excerpt';
+          excerpt.textContent = result.excerpt || result.content;
+          
+          resultItem.appendChild(title);
+          resultItem.appendChild(excerpt);
+          searchResultsContainer.appendChild(resultItem);
+        });
+      });
+      
+      // Close search results when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!searchResults.contains(e.target) && e.target !== searchInput) {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Close search results when pressing Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Handle window resize for search results positioning
+      window.addEventListener('resize', function() {
+        if (searchResults.classList.contains('active')) {
+          positionSearchResults();
+        }
+      });
+    });
+  </script>
+
+  <script>
+    // Add ids to all headings for TOC links
+    document.addEventListener('DOMContentLoaded', function() {
+      // Target headings inside article tags
+      const headings = document.querySelectorAll('article h2, article h3, article h4');
+      
+      // First add IDs to all headings if they don't have one
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.trim().toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Then populate the TOC if the toc-list element exists
+      const tocList = document.getElementById('toc-list');
+      
+      if (tocList) {
+        // Clear any existing content (needed for home page)
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/')) {
+          // For homepage, only show the page's own headings
+          // Get headings from the homepage article
+          const homePageHeadings = document.querySelectorAll('.post-content h2');
+          
+          // Remove existing entries if any
+          tocList.innerHTML = '';
+          
+          homePageHeadings.forEach(function(heading) {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            link.href = '#' + heading.id;
+            // Remove emoji prefixes for cleaner TOC
+            link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+          });
+        } 
+        else if (document.querySelector('article')) {
+          // For post pages or other content pages
+          const articleHeadings = document.querySelectorAll('article h2, article h3');
+          
+          // Only populate if we have headings and we're not on the homepage
+          if (articleHeadings.length > 0) {
+            // Clear existing entries
+            tocList.innerHTML = '';
+            
+            articleHeadings.forEach(function(heading) {
+              // Skip headings that might be part of the metadata or title
+              // Skip the post title (h1)
+              if (heading.tagName !== 'H1') {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                
+                // Add appropriate indentation for h3
+                if (heading.tagName === 'H3') {
+                  listItem.style.marginLeft = '20px';
+                }
+                
+                link.href = '#' + heading.id;
+                // Clean up the emoji prefixes for TOC display
+                link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+                
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
+              }
+            });
+          }
+        }
+      }
+    });
+
+    // Theme switcher logic
+    // ... existing code ...
+  </script>
+  
+  <!-- iOS Menu Fix -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fix for iOS menu interaction
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Toggle menu state
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          
+          // Prevent body scrolling when menu is open
+          document.body.classList.toggle('menu-active');
+          
+          // Force redraw on iOS
+          sidebar.style.display = 'none';
+          setTimeout(function() {
+            sidebar.style.display = 'block';
+          }, 0);
+        });
+        
+        // Ensure overlay closes menu
+        overlay.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-active');
+        });
+        
+        // Fix navigation links on iOS
+        const navLinks = document.querySelectorAll('.md-nav__link');
+        
+        navLinks.forEach(function(link) {
+          link.addEventListener('touchstart', function() {
+            this.style.backgroundColor = 'rgba(26, 115, 232, 0.1)';
+          });
+          
+          link.addEventListener('touchend', function() {
+            this.style.backgroundColor = '';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Added simple menu fix for iOS -->
+  <script>
+    /* Mobile menu fix for iOS */
+    (function() {
+      var menuBtn = document.getElementById('menu-toggle');
+      if (!menuBtn) return;
+      
+      var nav = document.querySelector('.navigation-column');
+      var overlay = document.getElementById('md-overlay');
+      
+      // Re-bind events to ensure they work
+      menuBtn.addEventListener('click', function(e) {
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+      
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          nav.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
+    })();
+  </script>
+
+  <!-- Google Analytics Event Tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get browser information for events
+      var browserInfo = {
+        name: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        vendor: navigator.vendor
+      };
+      
+      // Handle page navigation events (for single-page applications or Ajax navigation)
+      // This helps with tracking screen views when URL changes via history API
+      let lastUrl = location.href; 
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          // Send a new screen_view event when the URL changes
+          gtag('event', 'screen_view', {
+            'app_name': 'RZTech',
+            'screen_name': document.title,
+            'page_path': location.pathname,
+            'screen_class': location.pathname.split('/')[1] || 'home',
+            'browser_info': browserInfo
+          });
+        }
+      }).observe(document, {subtree: true, childList: true});
+
+      // Track navigation links
+      const navLinks = document.querySelectorAll('.md-nav__link');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'navigation_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'link_url': this.href,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track social media shares
+      const socialLinks = document.querySelectorAll('.content-column a[target="_blank"][title^="Share on"]');
+      socialLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const platform = this.getAttribute('title').replace('Share on ', '');
+          gtag('event', 'social_share', {
+            'event_category': 'Social',
+            'event_label': platform,
+            'page_path': location.pathname,
+            'page_title': document.title,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track code copy
+      const copyButtons = document.querySelectorAll('.copy-button');
+      copyButtons.forEach(function(button, index) {
+        button.addEventListener('click', function() {
+          gtag('event', 'code_copy', {
+            'event_category': 'Content',
+            'event_label': 'Code Block ' + (index + 1),
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track search usage
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          const query = this.value.trim();
+          
+          if (query.length > 2) {
+            searchTimeout = setTimeout(function() {
+              gtag('event', 'search', {
+                'event_category': 'Search',
+                'search_term': query,
+                'browser_info': browserInfo
+              });
+            }, 1000); // Wait 1 second after typing stops
+          }
+        });
+      }
+
+      // Track TOC clicks - Enhanced to catch all TOC links
+      const tocLinks = document.querySelectorAll('#toc-list a, .md-toc a, .table-of-contents a, article .toc a, [id*="toc"] a, [class*="toc"] a');
+      tocLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'toc_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track all page links within articles
+      const pageLinks = document.querySelectorAll('article a[href^="/"], article a[href^="./"], article a[href^="../"], article a[href^="#"]');
+      pageLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'page_link_click', {
+            'event_category': 'Internal Navigation',
+            'event_label': this.textContent.trim() || this.getAttribute('href'),
+            'link_url': this.getAttribute('href'),
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track external links
+      const allLinks = document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])');
+      allLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'external_link', {
+            'event_category': 'Outbound',
+            'event_label': this.href,
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Enhanced page-specific tracking
+      
+
+      
+    });
+  </script>
+</body>
+</html>

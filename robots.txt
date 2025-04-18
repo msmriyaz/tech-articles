@@ -1,0 +1,27 @@
+# Allow all robots
+User-agent: *
+Allow: /
+
+# Allow Facebook crawler
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Facebot
+Allow: /
+
+# Allow LinkedIn crawler
+User-agent: LinkedInBot
+Allow: /
+
+# Allow Twitter crawler
+User-agent: Twitterbot
+Allow: /
+
+# Allow WhatsApp crawler
+User-agent: WhatsApp
+Allow: /
+
+# Allow general social media crawlers
+User-agent: ia_archiver
+Allow: /
+
+Sitemap: https://msmriyaz.github.io/tech-articles/sitemap.xml 

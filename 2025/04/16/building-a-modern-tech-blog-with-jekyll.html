@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb#">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Building a Modern Tech Blog with Jekyll | RZTech</title>
+  <meta name="description" content="A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies.">
+  <meta name="author" content="Riyaz">
+  <!-- Canonical URL - manually constructed -->
+  <link rel="canonical" href="https://msmriyaz.github.io/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html">
+  <link rel="stylesheet" href="/tech-articles/assets/css/style.css">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Building a Modern Tech Blog with Jekyll">
+  <meta property="og:description" content="A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies.">
+  <!-- OG URL - manually constructed -->
+  <meta property="og:url" content="https://msmriyaz.github.io/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html">
+  <meta property="og:site_name" content="RZTech">
+  <!-- Image - manually constructed -->
+  <meta property="og:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building a Modern Tech Blog with Jekyll">
+  <meta name="twitter:description" content="A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies.">
+  <meta name="twitter:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  
+  <!-- LinkedIn Specific -->
+  <meta name="linkedin:card" content="summary_large_image">
+  <meta name="linkedin:title" content="Building a Modern Tech Blog with Jekyll">
+  <meta name="linkedin:description" content="A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies.">
+  <meta name="linkedin:image" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta name="author" content="Riyaz Sheriff">
+  
+  <!-- WhatsApp Specific (helps with link previews) -->
+  <meta property="og:image:alt" content="Building a Modern Tech Blog with Jekyll">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- Additional WhatsApp-specific meta tags -->
+  <meta property="og:image:secure_url" content="https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDQE96RC7P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Set content category as custom dimension
+    var contentCategory = "home";
+    
+      contentCategory = "web-development";
+    
+
+    // Get browser information
+    var browserInfo = {
+      name: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      vendor: navigator.vendor
+    };
+
+    gtag('config', 'G-YDQE96RC7P', {
+      'page_path': location.pathname,
+      'page_title': document.title,
+      'content_category': contentCategory,
+      'browser_info': browserInfo
+    });
+    
+    // Send screen_view event for GA4 page/screen reporting
+    gtag('event', 'screen_view', {
+      'app_name': 'RZTech',
+      'screen_name': document.title,
+      'page_path': location.pathname,
+      'screen_class': contentCategory,
+      'browser_info': browserInfo
+    });
+  </script>
+  <!-- End Google Analytics -->
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Sans is loaded through CSS @font-face rules for better performance -->
+  
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="RZTech" href="/tech-articles/feed.xml">
+  <!-- Favicon -->
+  <link rel="icon" href="/tech-articles/assets/images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/tech-articles/assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- Inline CSS for navigation -->
+  <style>
+    /* Remove default triangle indicators */
+    .dropdown-icon, 
+    .dropdown-toggle:after,
+    .nav-triangle {
+      display: none !important;
+    }
+    
+    /* Add scroll margin for anchor points */
+    h2, h3, h4 {
+      scroll-margin-top: 80px;
+    }
+    
+    /* Add down arrows only to top-level items with dropdown */
+    .md-nav__list > .md-nav__item--nested > .md-nav__link::after {
+      content: "▼";
+      display: inline-block !important;
+      margin-left: 4px;
+      font-size: 0.6em;
+      vertical-align: middle;
+      color: #666;
+    }
+    
+    /* Make sure no other arrows appear */
+    .md-nav__list--nested .md-nav__link::after,
+    .md-nav__list--nested .md-nav__link::before {
+      display: none !important;
+    }
+    
+    /* Main navigation styling */
+    .md-nav__list > .md-nav__item > .md-nav__link {
+      font-weight: 500;
+      font-size: 0.95em;
+      padding: 0.5rem 0;
+      color: #333;
+    }
+    /* Remove only specific pseudo-elements */
+    .md-nav__item a::before {
+      display: none !important;
+    }
+    /* Remove bullet points from table of contents */
+    .md-toc ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+    .md-toc li {
+      margin-bottom: 0.5rem;
+    }
+    /* Style table of contents links */
+    .md-toc a {
+      color: #5f6368; /* Gray text */
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .md-toc a:hover,
+    .md-toc a:active,
+    .md-toc a.active {
+      color: #1a73e8; /* Blue on hover/active */
+      text-decoration: none;
+    }
+    /* Code block styles with copy button */
+    pre {
+      position: relative;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      color: #6e7781;
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .copy-button:hover {
+      background-color: #f3f4f6;
+      color: #1a73e8;
+    }
+    .copy-button.copied {
+      background-color: #e6f4ea;
+      color: #137333;
+      border-color: #137333;
+    }
+    /* Improve mobile header layout */
+    @media screen and (max-width: 767px) {
+      .md-header__inner {
+        padding: 0 16px;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .md-header__title-container {
+        max-width: 60%;
+        min-width: 0;
+        flex-shrink: 1;
+        overflow: hidden;
+      }
+      
+      .md-header__title {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+      }
+      
+      .md-header__right {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+      }
+      
+      .md-search__form {
+        width: 140px;
+      }
+      
+      /* Extra small devices */
+      @media screen and (max-width: 380px) {
+        .md-search__form {
+          width: 100px;
+        }
+      }
+      
+      /* Very small devices */
+      @media screen and (max-width: 320px) {
+        .md-search__form {
+          width: 80px;
+        }
+      }
+      
+      .md-header__button {
+        margin-left: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="md-header" data-md-component="header">
+    <nav class="md-header__inner">
+      <!-- Header title with logo on left -->
+      <div class="md-header__title-container">
+        <div class="md-header__logo">
+          <a href="/tech-articles/" title="RZTech">
+            <img src="/tech-articles/assets/images/logo.png" alt="RZTech logo" height="32">
+            <span class="md-header__title">RZTech</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side items -->
+      <div class="md-header__right">
+        <!-- Search -->
+        <div class="md-search" data-md-component="search">
+          <div class="md-search__form">
+            <input id="search-input" class="md-search__input" type="search" placeholder="Search" aria-label="Search">
+            <label class="md-search__icon" for="search-input">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16a6.5 6.5 0 0 1-6.5-6.5A6.5 6.5 0 0 1 9.5 3m0 2A4.5 4.5 0 0 0 5 9.5a4.5 4.5 0 0 0 4.5 4.5 4.5 4.5 0 0 0 4.5-4.5A4.5 4.5 0 0 0 9.5 5Z"/>
+              </svg>
+            </label>
+          </div>
+          <div id="search-results" class="md-search__output">
+            <div class="md-search__result">
+              <!-- Search results will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <label class="md-header__button" id="menu-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+          </svg>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <div class="md-container">
+    <main class="md-main">
+      <!-- Mobile overlay -->
+      <div id="md-overlay" class="md-overlay"></div>
+      
+      <!-- Main content with grid layout -->
+      <div class="md-content" id="md-content">
+        <div class="md-content__inner">
+          <!-- Three-column grid layout -->
+          <div class="grid-container">
+            <!-- Navigation column -->
+            <div class="grid-item navigation-column">
+              <nav class="md-nav">
+                <ul class="md-nav__list">
+                  <li class="md-nav__item">
+                    <a href="/tech-articles/" class="md-nav__link ">Home</a>
+                  </li>
+                  
+                  <!-- Articles section with dropdown -->
+                  <li class="md-nav__item md-nav__item--nested md-nav__item--expanded">
+                    <a href="/tech-articles/articles/" class="md-nav__link dropdown-toggle">
+                      All Articles
+                    </a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      
+                        <li class="md-nav__item">
+                          <a href="/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html" class="md-nav__link ">
+                            RAG Evolution: Applications & Future Pathways
+                          </a>
+                        </li>
+                      
+                        <li class="md-nav__item">
+                          <a href="/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html" class="md-nav__link md-nav__link--active">
+                            Building a Modern Tech Blog with Jekyll
+                          </a>
+                        </li>
+                      
+                    </ul>
+                  </li>
+                  
+                  <!-- Pages section -->
+                  <li class="md-nav__item md-nav__item--nested">
+                    <a href="javascript:void(0);" class="md-nav__link dropdown-toggle">
+                      Pages
+                    </a>
+                    <ul class="md-nav__list md-nav__list--nested">
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/about" class="md-nav__link ">About</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="/tech-articles/contact" class="md-nav__link ">Contact</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            
+            <!-- Middle content column -->
+            <div class="grid-item content-column">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem;">
+                <!-- Share Text -->
+                <span style="font-weight: bold;">Share to:</span>
+
+                <!-- Social Media Links -->
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html&title=Building+a+Modern+Tech+Blog+with+Jekyll&summary=A+detailed+walkthrough+of+how+I+built+this+tech+blog+using+Jekyll%2C+with+insights+into+content+authoring+workflows%2C+custom+styling%2C+and+de..." target="_blank" title="Share on LinkedIn">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://wa.me/?text=Building+a+Modern+Tech+Blog+with+Jekyll:%20https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html" target="_blank" title="Share on WhatsApp">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://bsky.app/intent/compose?text=Building+a+Modern+Tech+Blog+with+Jekyll%20https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html" target="_blank" title="Share on Bluesky">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html&text=Building+a+Modern+Tech+Blog+with+Jekyll" target="_blank" title="Share on X (Twitter)">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://reddit.com/submit?url=https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html&title=Building+a+Modern+Tech+Blog+with+Jekyll" target="_blank" title="Share on Reddit">
+                  <img width="26px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://msmriyaz.github.io/tech-articles%2F2025%2F04%2F16%2Fbuilding-a-modern-tech-blog-with-jekyll.html&quote=Building+a+Modern+Tech+Blog+with+Jekyll" target="_blank" title="Share on Facebook">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
+                </a>
+              </div>
+              
+              <article class="post-content">
+  <h1>Building a Modern Tech Blog with Jekyll</h1>
+  <p class="date">April 16, 2025</p>
+  <p>As I launch this new blog, I wanted to share my experience building a modern technical publishing platform using Jekyll. Whether you’re a developer looking to create your own space for technical writing or just curious about content management systems, this guide will walk you through the process from concept to deployment.</p>
+
+<h2 id="why-i-chose-jekyll-for-my-technical-blog">Why I Chose Jekyll for My Technical Blog</h2>
+
+<p>When evaluating options for my technical blog, I considered various platforms like WordPress, Ghost, and several JavaScript frameworks. I ultimately chose Jekyll for several compelling reasons:</p>
+
+<ol>
+  <li><strong>Markdown-based content authoring</strong> - Writing in Markdown lets me focus on content rather than formatting</li>
+  <li><strong>Git-based workflow</strong> - Version control for my articles feels natural as a developer</li>
+  <li><strong>Static site generation</strong> - Fast loading times, excellent security, and minimal hosting requirements</li>
+  <li><strong>Customization flexibility</strong> - Complete control over the design without unnecessary complexity</li>
+  <li><strong>GitHub Pages integration</strong> - Free, reliable hosting with built-in CI/CD</li>
+</ol>
+
+<p>Unlike dynamic CMS platforms, Jekyll generates static HTML files that can be hosted anywhere, reducing security concerns and hosting costs while maximizing performance.</p>
+
+<h2 id="the-content-creation-workflow">The Content Creation Workflow</h2>
+
+<p>One of Jekyll’s greatest strengths is how it integrates with a developer’s existing workflow. Here’s how my content creation process works from idea to publication:</p>
+
+<p><img src="/tech-articles/assets/images/articles/2025/content-creation-wf-2025-04-16-043556.png" alt="Content Creation Workflow" class="img-fluid rounded shadow" style="max-width: 40%; height: auto; display: block; margin: 0 auto;" /></p>
+
+<p>This workflow gives me several advantages:</p>
+<ul>
+  <li><strong>Version control</strong> for all content changes</li>
+  <li><strong>Collaborative editing</strong> through pull requests if needed</li>
+  <li><strong>Automated deployment</strong> removing manual publishing steps</li>
+  <li><strong>Content and code together</strong> in a single repository</li>
+</ul>
+
+<h2 id="setting-up-your-own-jekyll-blog">Setting Up Your Own Jekyll Blog</h2>
+
+<p>If you’d like to create a similar setup, here’s how to get started:</p>
+
+<h3 id="1-initial-setup">1. Initial Setup</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install Ruby and Jekyll dependencies</span>
+gem <span class="nb">install </span>jekyll bundler
+
+<span class="c"># Create a new Jekyll site</span>
+jekyll new my-tech-blog
+<span class="nb">cd </span>my-tech-blog
+
+<span class="c"># Start the local development server</span>
+bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<p>Your site will be available at <code class="language-plaintext highlighter-rouge">http://localhost:4000</code> for previewing as you work.</p>
+
+<h3 id="2-customizing-your-theme">2. Customizing Your Theme</h3>
+
+<p>While Jekyll comes with a default theme, I wanted something that felt more like a technical documentation site. I created a custom theme with these modifications:</p>
+
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example SCSS customization</span>
+<span class="nv">$brand-color</span><span class="p">:</span> <span class="mh">#0969DA</span><span class="p">;</span>
+<span class="nv">$header-height</span><span class="p">:</span> <span class="m">48px</span><span class="p">;</span>
+<span class="nv">$sidebar-width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+
+<span class="nc">.md-container</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">flex</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.md-main</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The visual design emphasizes readability with a clean, distraction-free layout that puts the content first.</p>
+
+<h3 id="3-content-organization">3. Content Organization</h3>
+
+<p>Jekyll’s content structure is intuitive for a technical blog:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my-tech-blog/
+├── _posts/              # Blog articles 
+├── _layouts/            # HTML templates
+├── _includes/           # Reusable components
+├── assets/              # CSS, JS, images
+├── pages/               # Static pages
+└── _config.yml          # Site configuration
+</code></pre></div></div>
+
+<p>Articles go in the <code class="language-plaintext highlighter-rouge">_posts</code> directory with filenames following the <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-title.md</code> format, which automatically generates URLs and organizes content chronologically.</p>
+
+<h2 id="advanced-features-i-implemented">Advanced Features I Implemented</h2>
+
+<p>Beyond the basics, I incorporated several advanced features to enhance the reader experience:</p>
+
+<h3 id="syntax-highlighting">Syntax Highlighting</h3>
+
+<p>Code blocks are automatically highlighted to improve readability:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example JavaScript function</span>
+<span class="kd">function</span> <span class="nf">calculateOptimalPath</span><span class="p">(</span><span class="nx">nodes</span><span class="p">,</span> <span class="nx">startIndex</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Set</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">costs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Array</span><span class="p">(</span><span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nf">fill</span><span class="p">(</span><span class="kc">Infinity</span><span class="p">);</span>
+  <span class="nx">costs</span><span class="p">[</span><span class="nx">startIndex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while </span><span class="p">(</span><span class="nx">visited</span><span class="p">.</span><span class="nx">size</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Find the node with the minimum cost</span>
+    <span class="kd">let</span> <span class="nx">minCost</span> <span class="o">=</span> <span class="kc">Infinity</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">minNode</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    
+    <span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">visited</span><span class="p">.</span><span class="nf">has</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">costs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">minCost</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">minCost</span> <span class="o">=</span> <span class="nx">costs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">minNode</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// Mark as visited</span>
+    <span class="nx">visited</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nx">minNode</span><span class="p">);</span>
+    
+    <span class="c1">// Update costs to adjacent nodes</span>
+    <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="p">[</span><span class="nx">neighbor</span><span class="p">,</span> <span class="nx">weight</span><span class="p">]</span> <span class="k">of</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">minNode</span><span class="p">].</span><span class="nx">adjacentNodes</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">visited</span><span class="p">.</span><span class="nf">has</span><span class="p">(</span><span class="nx">neighbor</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">costs</span><span class="p">[</span><span class="nx">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="nx">costs</span><span class="p">[</span><span class="nx">neighbor</span><span class="p">],</span> <span class="nx">costs</span><span class="p">[</span><span class="nx">minNode</span><span class="p">]</span> <span class="o">+</span> <span class="nx">weight</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="nx">costs</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="responsive-design">Responsive Design</h3>
+
+<p>The site adapts seamlessly to different screen sizes:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">768px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nc">.grid-container</span> <span class="p">{</span>
+    <span class="py">grid-template-columns</span><span class="p">:</span> <span class="m">1</span><span class="n">fr</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nc">.navigation-column</span> <span class="p">{</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nc">.md-header__button</span> <span class="p">{</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="search-functionality">Search Functionality</h3>
+
+<p>I implemented client-side search to help readers find relevant content:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">searchInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">search-input</span><span class="dl">'</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">searchResults</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">search-results</span><span class="dl">'</span><span class="p">);</span>
+  
+  <span class="nx">searchInput</span><span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">input</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">toLowerCase</span><span class="p">().</span><span class="nf">trim</span><span class="p">();</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">query</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    
+    <span class="c1">// Search logic here</span>
+    <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="nx">allPosts</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">post</span> <span class="o">=&gt;</span> 
+      <span class="nx">post</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nf">toLowerCase</span><span class="p">().</span><span class="nf">includes</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">||</span> 
+      <span class="nx">post</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nf">toLowerCase</span><span class="p">().</span><span class="nf">includes</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Display results</span>
+    <span class="nf">displayResults</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="deployment-strategy">Deployment Strategy</h2>
+
+<p>For deployment, I chose GitHub Pages because of its seamless integration with Jekyll:</p>
+
+<p><img src="/tech-articles/assets/images/articles/2025/deployment-jekyll-content-2025-04-16-043915.png" alt="Deployment Strategy" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" /></p>
+
+<p>The deployment process is fully automated - whenever I push changes to the main branch, GitHub Actions builds the site and deploys it to GitHub Pages.</p>
+
+<h2 id="performance-optimization">Performance Optimization</h2>
+
+<p>To ensure the site loads quickly, I implemented several optimizations:</p>
+
+<ol>
+  <li><strong>Minified CSS and JavaScript</strong> using Jekyll’s built-in compression</li>
+  <li><strong>Responsive images</strong> that load appropriate sizes based on the device</li>
+  <li><strong>Preloading critical resources</strong> to improve perceived loading speed</li>
+  <li><strong>Browser caching</strong> for static assets</li>
+</ol>
+
+<p>These optimizations result in perfect Lighthouse scores for performance and accessibility.</p>
+
+<h2 id="challenges-and-solutions">Challenges and Solutions</h2>
+
+<p>Building this site wasn’t without challenges. Here are some issues I encountered and how I resolved them:</p>
+
+<h3 id="optional-feature-custom-domain-configuration">Optional Feature: Custom Domain Configuration</h3>
+
+<p>While I’m using the default GitHub Pages URL for this blog, many readers might want to set up a custom domain. If you’re interested in that route, here’s what you’ll need to do:</p>
+
+<ol>
+  <li>Add the appropriate A records pointing to GitHub’s servers in your domain registrar’s settings</li>
+  <li>Configure a CNAME file in your repository with your domain name</li>
+  <li>Enable HTTPS in the GitHub repository settings</li>
+</ol>
+
+<p>This process turns your <code class="language-plaintext highlighter-rouge">username.github.io/repository</code> URL into a professional <code class="language-plaintext highlighter-rouge">yourdomain.com</code> address.</p>
+
+<h3 id="challenge-code-block-styling">Challenge: Code Block Styling</h3>
+
+<p>Getting code blocks to look good on both light and dark themes required some custom CSS:</p>
+
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">pre</span><span class="o">,</span> <span class="nt">code</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="n">ui-monospace</span><span class="o">,</span> <span class="n">SFMono-Regular</span><span class="o">,</span> <span class="s2">"SF Mono"</span><span class="o">,</span> <span class="n">Menlo</span><span class="o">,</span> <span class="n">Consolas</span><span class="o">,</span> <span class="nb">monospace</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">0</span><span class="mi">.85rem</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="nv">$border-color</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">6px</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="nv">$grey-color-light</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="p">(</span><span class="n">prefers-color-scheme</span><span class="o">:</span> <span class="n">dark</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">pre</span><span class="o">,</span> <span class="nt">code</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="mh">#1a1a1a</span><span class="p">;</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="mh">#e6e6e6</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Building this technical blog with Jekyll has been a rewarding experience that aligns perfectly with my workflow as a developer. The platform provides the right balance of simplicity and flexibility, allowing me to focus on creating content while maintaining complete control over the presentation.</p>
+
+<p>I hope this walkthrough helps you in creating your own technical blogging platform.</p>
+
+<p>Happy blogging!</p>
+
+</article>
+
+<!-- JSON-LD Structured Data for Articles -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Building a Modern Tech Blog with Jekyll",
+  "description": "A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies.",
+  "image": "https://msmriyaz.github.io/tech-articles/assets/images/og-default.jpg",
+  "datePublished": "2025-04-16T00:00:00+00:00",
+  "dateModified": "2025-04-16T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Riyaz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "RZTech",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://msmriyaz.github.io/tech-articles/assets/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://msmriyaz.github.io/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html"
+  }
+}
+</script>
+            </div>
+            
+            <!-- Table of contents column -->
+            <div class="grid-item toc-column">
+              <div class="md-toc">
+                <h2>Table of Contents</h2>
+                <ul id="toc-list">
+                  
+                    <!-- Dynamic TOC will be populated by JavaScript -->
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add code copy button script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all code blocks
+      const codeBlocks = document.querySelectorAll('pre');
+      
+      // Add copy button to each code block
+      codeBlocks.forEach(function(codeBlock) {
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-button';
+        copyButton.textContent = 'Copy';
+        
+        // Add button to code block
+        codeBlock.appendChild(copyButton);
+        
+        // Add click event listener to copy button
+        copyButton.addEventListener('click', function() {
+          // Get the code content
+          const code = codeBlock.querySelector('code') 
+            ? codeBlock.querySelector('code').innerText 
+            : codeBlock.innerText;
+          
+          // Copy to clipboard
+          navigator.clipboard.writeText(code).then(function() {
+            // Update button state to show success
+            copyButton.textContent = 'Copied!';
+            copyButton.classList.add('copied');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+              copyButton.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy text: ', err);
+            copyButton.textContent = 'Failed';
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              copyButton.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+      });
+    });
+  </script>
+
+  <!-- Search data -->
+  <script type="application/json" id="search-data">
+  
+  [          {        "title": "RAG Evolution: Applications & Future Pathways",        "url": "/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html",        "content": "![RAG Knowledge Reading]({{ site.baseurl }}/assets/images/articles/2025/rag/rag_knowledge-reading.jpg){: .img-fluid .rounded .shadow style=\"max-wid...",        "excerpt": "An in-depth exploration of how RAG is transforming industries, from legal services to healthcare, with insights into technical challenges and future directions."      },          {        "title": "Building a Modern Tech Blog with Jekyll",        "url": "/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html",        "content": "As I launch this new blog, I wanted to share my experience building a modern technical publishing platform using Jekyll. Whether you’re a developer...",        "excerpt": "A detailed walkthrough of how I built this tech blog using Jekyll, with insights into content authoring workflows, custom styling, and deployment strategies."      }                      ,      {        "title": "About This Documentation",        "url": "/tech-articles/about.html",        "content": "    🎯 Purpose  This technical documentation collection aims to provide clear, comprehensive, and practical guidance on various technical topics. Wh...",        "excerpt": ""      },                {        "title": "Contact Me",        "url": "/tech-articles/contact.html",        "content": "    ✉️ Get in Touch  I value your feedback and am here to help with any questions you might have about my technical documentation.  📞 How to Reach ...",        "excerpt": ""      },                {        "title": "Facebook Sharing Debugger",        "url": "/tech-articles/facebook-debug.html",        "content": "  Facebook Sharing Debugger        If you're having trouble with how your links appear when shared on Facebook, follow these steps:                ...",        "excerpt": ""      },                {        "title": "Refresh Facebook Cache",        "url": "/tech-articles/refresh-fb-cache.html",        "content": "  Refresh Facebook Cache        Important: If your links are showing \"Page not found\" on Facebook, use this tool to refresh Facebook's cache.      ...",        "excerpt": ""      },                {        "title": "WhatsApp Sharing Debug",        "url": "/tech-articles/whatsapp-debug.html",        "content": "  WhatsApp Sharing Debugger        Use this tool to test and troubleshoot WhatsApp sharing for your articles.                Test WhatsApp Sharing ...",        "excerpt": ""      }      ]
+  </script>
+
+  <!-- JavaScript for navigation and search -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle - simple implementation
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      if (menuToggle && sidebar && overlay) {
+        // Clean implementation for iOS compatibility
+        menuToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function() {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
+      
+      // Expand/collapse navigation sections
+      const navParents = document.querySelectorAll('.md-nav__item--nested');
+      
+      navParents.forEach(function(parent) {
+        const parentLink = parent.querySelector('.md-nav__link');
+        
+        // Automatically expand the All Articles section on relevant pages
+        if (parentLink.textContent.trim() === 'All Articles' && 
+            (window.location.pathname.includes('/articles/') || 
+             document.querySelector('.md-content').classList.contains('post'))) {
+          parent.classList.add('md-nav__item--expanded');
+        }
+        
+        parentLink.addEventListener('click', function(e) {
+          if (parentLink.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 768) {
+            e.preventDefault();
+            
+            // If this is not the clicked item, close it
+            navParents.forEach(function(otherParent) {
+              if (otherParent !== parent) {
+                otherParent.classList.remove('md-nav__item--expanded');
+              }
+            });
+            
+            // Toggle the clicked item
+            parent.classList.toggle('md-nav__item--expanded');
+          }
+        });
+      });
+      
+      // Add ID attributes to headings for deep linking
+      const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+      
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Search functionality
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      const searchResultsContainer = searchResults.querySelector('.md-search__result');
+      
+      // Parse posts data from the data attribute set by Jekyll
+      const allPosts = JSON.parse(document.getElementById('search-data').textContent);
+      
+      // Position search results better on mobile
+      function positionSearchResults() {
+        // For mobile devices
+        if (window.innerWidth <= 768) {
+          // Make sure search results appear in the viewport
+          const searchRect = searchInput.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          
+          // Position results to be visible
+          searchResults.style.maxHeight = (window.innerHeight - searchRect.bottom - 20) + 'px';
+          
+          // Disable body scrolling when search is open
+          if (searchResults.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.body.style.overflow = '';
+          }
+        } else {
+          // Reset for desktop
+          searchResults.style.maxHeight = '';
+          document.body.style.overflow = '';
+        }
+      }
+      
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+          return;
+        }
+        
+        // Perform search
+        const results = allPosts.filter(post => {
+          return post.title.toLowerCase().includes(query) || 
+                 post.content.toLowerCase().includes(query) ||
+                 (post.excerpt && post.excerpt.toLowerCase().includes(query));
+        });
+        
+        // Display results
+        searchResultsContainer.innerHTML = '';
+        searchResults.classList.add('active');
+        
+        // Position search results properly
+        positionSearchResults();
+        
+        if (results.length === 0) {
+          searchResultsContainer.innerHTML = '<div class="md-search__no-results">No matching documents</div>';
+          return;
+        }
+        
+        // Limit results on mobile
+        const displayResults = window.innerWidth <= 768 ? results.slice(0, 5) : results;
+        
+        displayResults.forEach(result => {
+          const resultItem = document.createElement('a');
+          resultItem.className = 'md-search__result-item';
+          resultItem.href = result.url;
+          
+          const title = document.createElement('div');
+          title.className = 'md-search__result-title';
+          title.textContent = result.title;
+          
+          const excerpt = document.createElement('div');
+          excerpt.className = 'md-search__result-excerpt';
+          excerpt.textContent = result.excerpt || result.content;
+          
+          resultItem.appendChild(title);
+          resultItem.appendChild(excerpt);
+          searchResultsContainer.appendChild(resultItem);
+        });
+      });
+      
+      // Close search results when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!searchResults.contains(e.target) && e.target !== searchInput) {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Close search results when pressing Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          searchResults.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Handle window resize for search results positioning
+      window.addEventListener('resize', function() {
+        if (searchResults.classList.contains('active')) {
+          positionSearchResults();
+        }
+      });
+    });
+  </script>
+
+  <script>
+    // Add ids to all headings for TOC links
+    document.addEventListener('DOMContentLoaded', function() {
+      // Target headings inside article tags
+      const headings = document.querySelectorAll('article h2, article h3, article h4');
+      
+      // First add IDs to all headings if they don't have one
+      headings.forEach(function(heading) {
+        if (!heading.id) {
+          const id = heading.textContent.trim().toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-');
+          heading.id = id;
+        }
+      });
+      
+      // Then populate the TOC if the toc-list element exists
+      const tocList = document.getElementById('toc-list');
+      
+      if (tocList) {
+        // Clear any existing content (needed for home page)
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/')) {
+          // For homepage, only show the page's own headings
+          // Get headings from the homepage article
+          const homePageHeadings = document.querySelectorAll('.post-content h2');
+          
+          // Remove existing entries if any
+          tocList.innerHTML = '';
+          
+          homePageHeadings.forEach(function(heading) {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            link.href = '#' + heading.id;
+            // Remove emoji prefixes for cleaner TOC
+            link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+          });
+        } 
+        else if (document.querySelector('article')) {
+          // For post pages or other content pages
+          const articleHeadings = document.querySelectorAll('article h2, article h3');
+          
+          // Only populate if we have headings and we're not on the homepage
+          if (articleHeadings.length > 0) {
+            // Clear existing entries
+            tocList.innerHTML = '';
+            
+            articleHeadings.forEach(function(heading) {
+              // Skip headings that might be part of the metadata or title
+              // Skip the post title (h1)
+              if (heading.tagName !== 'H1') {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                
+                // Add appropriate indentation for h3
+                if (heading.tagName === 'H3') {
+                  listItem.style.marginLeft = '20px';
+                }
+                
+                link.href = '#' + heading.id;
+                // Clean up the emoji prefixes for TOC display
+                link.textContent = heading.textContent.replace(/^[^\w]*/, '').trim();
+                
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
+              }
+            });
+          }
+        }
+      }
+    });
+
+    // Theme switcher logic
+    // ... existing code ...
+  </script>
+  
+  <!-- iOS Menu Fix -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fix for iOS menu interaction
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementsByClassName('navigation-column')[0];
+      const overlay = document.getElementById('md-overlay');
+      
+      if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Toggle menu state
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+          
+          // Prevent body scrolling when menu is open
+          document.body.classList.toggle('menu-active');
+          
+          // Force redraw on iOS
+          sidebar.style.display = 'none';
+          setTimeout(function() {
+            sidebar.style.display = 'block';
+          }, 0);
+        });
+        
+        // Ensure overlay closes menu
+        overlay.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-active');
+        });
+        
+        // Fix navigation links on iOS
+        const navLinks = document.querySelectorAll('.md-nav__link');
+        
+        navLinks.forEach(function(link) {
+          link.addEventListener('touchstart', function() {
+            this.style.backgroundColor = 'rgba(26, 115, 232, 0.1)';
+          });
+          
+          link.addEventListener('touchend', function() {
+            this.style.backgroundColor = '';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Added simple menu fix for iOS -->
+  <script>
+    /* Mobile menu fix for iOS */
+    (function() {
+      var menuBtn = document.getElementById('menu-toggle');
+      if (!menuBtn) return;
+      
+      var nav = document.querySelector('.navigation-column');
+      var overlay = document.getElementById('md-overlay');
+      
+      // Re-bind events to ensure they work
+      menuBtn.addEventListener('click', function(e) {
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+      
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          nav.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      }
+    })();
+  </script>
+
+  <!-- Google Analytics Event Tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get browser information for events
+      var browserInfo = {
+        name: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        vendor: navigator.vendor
+      };
+      
+      // Handle page navigation events (for single-page applications or Ajax navigation)
+      // This helps with tracking screen views when URL changes via history API
+      let lastUrl = location.href; 
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          // Send a new screen_view event when the URL changes
+          gtag('event', 'screen_view', {
+            'app_name': 'RZTech',
+            'screen_name': document.title,
+            'page_path': location.pathname,
+            'screen_class': location.pathname.split('/')[1] || 'home',
+            'browser_info': browserInfo
+          });
+        }
+      }).observe(document, {subtree: true, childList: true});
+
+      // Track navigation links
+      const navLinks = document.querySelectorAll('.md-nav__link');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'navigation_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'link_url': this.href,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track social media shares
+      const socialLinks = document.querySelectorAll('.content-column a[target="_blank"][title^="Share on"]');
+      socialLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const platform = this.getAttribute('title').replace('Share on ', '');
+          gtag('event', 'social_share', {
+            'event_category': 'Social',
+            'event_label': platform,
+            'page_path': location.pathname,
+            'page_title': document.title,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track code copy
+      const copyButtons = document.querySelectorAll('.copy-button');
+      copyButtons.forEach(function(button, index) {
+        button.addEventListener('click', function() {
+          gtag('event', 'code_copy', {
+            'event_category': 'Content',
+            'event_label': 'Code Block ' + (index + 1),
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track search usage
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          const query = this.value.trim();
+          
+          if (query.length > 2) {
+            searchTimeout = setTimeout(function() {
+              gtag('event', 'search', {
+                'event_category': 'Search',
+                'search_term': query,
+                'browser_info': browserInfo
+              });
+            }, 1000); // Wait 1 second after typing stops
+          }
+        });
+      }
+
+      // Track TOC clicks - Enhanced to catch all TOC links
+      const tocLinks = document.querySelectorAll('#toc-list a, .md-toc a, .table-of-contents a, article .toc a, [id*="toc"] a, [class*="toc"] a');
+      tocLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          const linkText = this.textContent.trim();
+          gtag('event', 'toc_click', {
+            'event_category': 'Navigation',
+            'event_label': linkText,
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track all page links within articles
+      const pageLinks = document.querySelectorAll('article a[href^="/"], article a[href^="./"], article a[href^="../"], article a[href^="#"]');
+      pageLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'page_link_click', {
+            'event_category': 'Internal Navigation',
+            'event_label': this.textContent.trim() || this.getAttribute('href'),
+            'link_url': this.getAttribute('href'),
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Track external links
+      const allLinks = document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])');
+      allLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          gtag('event', 'external_link', {
+            'event_category': 'Outbound',
+            'event_label': this.href,
+            'page_path': location.pathname,
+            'browser_info': browserInfo
+          });
+        });
+      });
+
+      // Enhanced page-specific tracking
+      
+
+      
+      // Article page specific tracking
+      // Track reading progress
+      const article = document.querySelector('article');
+      if (article) {
+        let readingProgressSent = {
+          '25%': false,
+          '50%': false,
+          '75%': false,
+          '100%': false
+        };
+        
+        window.addEventListener('scroll', function() {
+          const articleHeight = article.offsetHeight;
+          const articleTop = article.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+          const scrollPosition = -articleTop;
+          const scrollPercentage = Math.min(100, Math.round((scrollPosition / (articleHeight - windowHeight)) * 100));
+          
+          if (scrollPercentage >= 25 && !readingProgressSent['25%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '25%',
+              'article_title': document.title,
+              'browser_info': browserInfo
+            });
+            readingProgressSent['25%'] = true;
+          }
+          
+          if (scrollPercentage >= 50 && !readingProgressSent['50%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '50%',
+              'article_title': document.title,
+              'browser_info': browserInfo
+            });
+            readingProgressSent['50%'] = true;
+          }
+          
+          if (scrollPercentage >= 75 && !readingProgressSent['75%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '75%',
+              'article_title': document.title,
+              'browser_info': browserInfo
+            });
+            readingProgressSent['75%'] = true;
+          }
+          
+          if (scrollPercentage >= 95 && !readingProgressSent['100%']) {
+            gtag('event', 'reading_progress', {
+              'event_category': 'Article',
+              'event_label': '100%',
+              'article_title': document.title,
+              'browser_info': browserInfo
+            });
+            readingProgressSent['100%'] = true;
+          }
+        });
+      }
+      
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jekyll Variable Debug</title>
+</head>
+<body>
+  <h1>Jekyll Variable Debug</h1>
+  
+  <h2>Base Variables</h2>
+  <ul>
+    <li>site.url: https://msmriyaz.github.io</li>
+    <li>site.baseurl: /tech-articles</li>
+    <li>page.url: /debug.html</li>
+  </ul>
+  
+  <h2>URL Construction Tests</h2>
+  <ul>
+    <li>site.url + site.baseurl: https://msmriyaz.github.io/tech-articles</li>
+    <li>site.url + site.baseurl + page.url: https://msmriyaz.github.io/tech-articles/debug.html</li>
+    <li>absolute_url of page.url: https://msmriyaz.github.io/tech-articles/debug.html</li>
+    <li>relative_url of page.url: /tech-articles/debug.html</li>
+  </ul>
+  
+  <h2>Meta Tag Tests</h2>
+  <ul>
+    <li>canonical: https://msmriyaz.github.io/tech-articles/debug.html</li>
+    <li>og:url: https://msmriyaz.github.io/tech-articles/debug.html</li>
+  </ul>
+  
+  <h2>Common URL Constructions</h2>
+  <ul>
+    <li>Post URL example: https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html</li>
+    <li>Home URL: https://msmriyaz.github.io/tech-articles/</li>
+  </ul>
+</body>
+</html> 

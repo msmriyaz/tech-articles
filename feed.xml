@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RZTech</title>
+    <description>A collection of my technical writings.</description>
+    <link>https://msmriyaz.github.io/tech-articles/</link>
+    <atom:link href="https://msmriyaz.github.io/tech-articles/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 18 Apr 2025 13:28:22 +0000</pubDate>
+    <lastBuildDate>Fri, 18 Apr 2025 13:28:22 +0000</lastBuildDate>
+    <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>RAG Evolution: Applications &amp; Future Pathways</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/tech-articles/assets/images/articles/2025/rag/rag_knowledge-reading.jpg&quot; alt=&quot;RAG Knowledge Reading&quot; class=&quot;img-fluid rounded shadow&quot; style=&quot;max-width: 100%; height: auto; display: block; margin: 0 auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When I first tested the RAG system in the beginning of January 2024, it felt like a pet project—an experiment to see if I could simply extract the right answer from a collection of PDFs. My initial article on the subject, “&lt;a href=&quot;https://medium.com/@rsheriff/understanding-and-building-production-ready-retrieval-augmented-generation-rag-applications-ebbac97487b8&quot;&gt;Understanding and Building Production-Ready Retrieval-Augmented Generation (RAG) Applications&lt;/a&gt;”, captured those early explorations. Back then, RAG was about curiosity and proof-of-concept: could I get a language model to reliably surface information from my own documents?&lt;/p&gt;
+
+&lt;p&gt;Fast forward to today, and the landscape has shifted dramatically. RAG is no longer just an experimental tool for tech enthusiasts—it’s rapidly becoming a foundational technology for enterprises across the globe. The market for retrieval-augmented generation is booming, growing from $1.2 billion in 2024 and projected to reach $1.5 billion in 2025, with a staggering CAGR of 49.1% through 2030. This surge is fueled by the explosion of unstructured data, the demand for context-aware AI, and the need to reduce hallucinations in generative models.&lt;/p&gt;
+
+&lt;p&gt;Retrieval-Augmented Generation (RAG) has transitioned from a niche AI technique to a cornerstone of enterprise innovation by 2025. By dynamically grounding large language models (LLMs) in real-time data, RAG bridges the gap between generative AI’s creativity and the precision of curated knowledge. This article explores RAG’s transformative role across industries, its technical and ethical challenges, and the skills required to harness its potential.&lt;/p&gt;
+
+&lt;h2 id=&quot;current-state-of-rag&quot;&gt;Current State of RAG&lt;/h2&gt;
+
+&lt;h3 id=&quot;the-promise-of-rag&quot;&gt;The Promise of RAG&lt;/h3&gt;
+&lt;p&gt;RAG enhances LLMs by integrating external data retrieval, enabling:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Accuracy&lt;/strong&gt;: Reduces hallucinations by 30–50% in domain-specific tasks like legal research and medical diagnosis.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Relevance&lt;/strong&gt;: Delivers context-aware responses using proprietary data (e.g., transaction histories, customer preferences).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Compliance&lt;/strong&gt;: Provides audit trails through citations, critical for regulated sectors like finance and healthcare.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;persistent-challenges&quot;&gt;Persistent Challenges&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Data Quality &amp;amp; Bias&lt;/strong&gt;: Outdated or biased sources lead to “hallucinations with citations,” risking misinformation in sensitive fields like healthcare.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Latency vs. Cost&lt;/strong&gt;: Retrieval steps add 100–300ms latency, while scaling to million-token contexts raises compute costs by 3–5x.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Ethical Risks&lt;/strong&gt;: Misuse for generating deceptive content and accountability gaps in blended human-AI outputs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;rag-architecture-evolution&quot;&gt;RAG Architecture Evolution&lt;/h2&gt;
+
+&lt;h3 id=&quot;core-architecture&quot;&gt;Core Architecture&lt;/h3&gt;
+&lt;p&gt;At its foundation, RAG combines two processes: retrieval (fetching relevant data) and generation (producing context-aware responses). The standard workflow includes:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Data Ingestion&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Sources: Structured (databases), semi-structured (JSON/XML), or unstructured (PDFs, text) data&lt;/li&gt;
+      &lt;li&gt;Chunking: Documents are split into smaller segments (200–500 tokens) to balance context and precision&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Embedding &amp;amp; Indexing&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Text is converted into vectors using models like all-mpnet-base-v2 or domain-specific encoders&lt;/li&gt;
+      &lt;li&gt;Vectors are stored in databases (e.g., FAISS, Pinecone) optimized for similarity searches&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Query Processing&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;User queries are embedded and matched against the vector database&lt;/li&gt;
+      &lt;li&gt;Top-K relevant passages are retrieved and reranked using cross-encoders&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Response Generation&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Retrieved context is combined with the query into a curated prompt&lt;/li&gt;
+      &lt;li&gt;The LLM generates a response with guardrails to minimize hallucinations&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;text-center&quot;&gt;
+    &lt;img src=&quot;/tech-articles/assets/images/articles/2025/rag/rag_architecture_image001.png&quot; alt=&quot;RAG Architecture&quot; class=&quot;img-fluid rounded shadow&quot; style=&quot;max-width: 100%; height: auto; display: block; margin: 0 auto;&quot; /&gt;
+    &lt;p class=&quot;text-muted mt-2&quot;&gt;&lt;small&gt;RAG System Architecture&lt;/small&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;knowledge-management&quot;&gt;Knowledge Management&lt;/h3&gt;
+
+&lt;p&gt;RAG systems manage knowledge updates while leveraging existing data through a combination of dynamic indexing, incremental learning, and automated maintenance strategies:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Incremental Learning &amp;amp; Dynamic Indexing&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Online Updates: New data is processed into embeddings and added to the vector index without rebuilding&lt;/li&gt;
+      &lt;li&gt;Hierarchical Indexing: Multi-layer indexing separates stale and current data&lt;/li&gt;
+      &lt;li&gt;Example: Healthcare RAG systems index new patient records daily while preserving historical data&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Hybrid Retrieval for Contextual Relevance&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Semantic + Keyword Search: Combines vector similarity with keyword filters&lt;/li&gt;
+      &lt;li&gt;Re-Ranking: Ensures most up-to-date and authoritative sources surface first&lt;/li&gt;
+      &lt;li&gt;Example: Financial queries about “2025 AML regulations” retrieve latest updates while referencing foundational rules&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Automated Maintenance Pipelines&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Version Control: Tools automatically replace outdated documents with updated versions&lt;/li&gt;
+      &lt;li&gt;Batch Processing: Periodic retraining of embedding models on refreshed corpora&lt;/li&gt;
+      &lt;li&gt;Example: Retail RAG systems sync product catalogs nightly, removing discontinued items&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Human-in-the-Loop Validation&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Regular audits to prune outdated content&lt;/li&gt;
+      &lt;li&gt;User feedback loops to identify gaps&lt;/li&gt;
+      &lt;li&gt;Uncertainty scoring to flag low-confidence retrievals&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;optimization-advances&quot;&gt;Optimization Advances&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;From Naive to Advanced RAG&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Pre-Retrieval Enhancements: Data enrichment, hybrid chunking, dynamic embeddings&lt;/li&gt;
+      &lt;li&gt;Retrieval Improvements: Hybrid search, query expansion&lt;/li&gt;
+      &lt;li&gt;Post-Retrieval Refinement: Reranking, context compression&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Modular RAG: Customization at Scale&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Flexible Pipelines: Plug-and-play retrievers, specialized modules&lt;/li&gt;
+      &lt;li&gt;Agentic Integration: Combining RAG with reinforcement learning&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Real-Time and Multimodal RAG&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Streaming Data: Real-time vector index updates&lt;/li&gt;
+      &lt;li&gt;Multimodal Retrieval: Extending to images, audio, and sensor data&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;industry-solutions&quot;&gt;Industry Solutions&lt;/h2&gt;
+
+&lt;h3 id=&quot;legal-services&quot;&gt;Legal Services&lt;/h3&gt;
+&lt;p&gt;RAG is revolutionizing legal practices through:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Case Law Research&lt;/strong&gt;: Law firms like DLA Piper use RAG to analyze thousands of case documents in seconds, reducing case preparation time by 35%.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Contract Analysis&lt;/strong&gt;: Tools like LexCheck leverage RAG to review contracts, flagging non-compliant clauses against evolving regulations.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Compliance Monitoring&lt;/strong&gt;: Banks and corporations deploy RAG to track regulatory updates across jurisdictions, automating 70% of compliance checks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;financial-services&quot;&gt;Financial Services&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Fraud Detection&lt;/strong&gt;: Banks like JPMorgan use RAG to analyze transaction patterns across internal databases and public watchlists, reducing false positives by 25%.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Compliance&lt;/strong&gt;: RAG systems auto-update with regulatory changes (e.g., GDPR, anti-money laundering laws), reducing manual review time by 40%.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Portfolio Management&lt;/strong&gt;: Hybrid RAG-agent systems pull real-time market data and historical trends to optimize asset allocation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;healthcare&quot;&gt;Healthcare&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Diagnostic Support&lt;/strong&gt;: HippoRAG 2 retrieves patient histories and medical journals, improving diagnostic accuracy by 15% in trials.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Regulatory Compliance&lt;/strong&gt;: RAG ensures EHR systems adhere to HIPAA by filtering sensitive data during retrieval.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;retail--e-commerce&quot;&gt;Retail &amp;amp; E-Commerce&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Personalized Marketing&lt;/strong&gt;: Target’s “Store Companion” uses RAG to generate hyper-targeted email campaigns, boosting conversion rates by 18%.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Inventory Management&lt;/strong&gt;: Walmart’s RAG system predicts demand using social media trends and sales data, reducing stockouts by 30%.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Customer Service&lt;/strong&gt;: Lowe’s deploys RAG chatbots that access product manuals and inventory data, resolving 90% of queries without human agents.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;future-of-document-management&quot;&gt;Future of Document Management&lt;/h2&gt;
+
+&lt;h3 id=&quot;from-dms-to-autonomous-systems&quot;&gt;From DMS to Autonomous Systems&lt;/h3&gt;
+
+&lt;p&gt;The assumption that RAG is poised to replace traditional Document Management Systems (DMS) by evolving into autonomous, self-processing systems is directionally accurate, supported by industry trends and technological advancements. This transformation represents a fundamental shift in how organizations handle their information assets.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-rag-outperforms-traditional-dms&quot;&gt;Why RAG Outperforms Traditional DMS&lt;/h3&gt;
+
+&lt;div class=&quot;table-responsive&quot;&gt;
+&lt;table style=&quot;width: 100%; border-collapse: collapse; border: 1px solid #e0e0e0;&quot;&gt;
+&lt;thead&gt;
+&lt;tr style=&quot;background-color: #f5f5f5;&quot;&gt;
+&lt;th style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.2em; font-weight: 500; text-align: left;&quot;&gt;Capability&lt;/th&gt;
+&lt;th style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.2em; font-weight: 500; text-align: left;&quot;&gt;Traditional DMS&lt;/th&gt;
+&lt;th style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.2em; font-weight: 500; text-align: left;&quot;&gt;RAG-Driven Systems&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.1em;&quot;&gt;Data Processing&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Static storage, keyword search&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Dynamic extraction, summarization, Q&amp;amp;A&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.1em;&quot;&gt;Adaptability&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Manual updates required&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Real-time knowledge integration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.1em;&quot;&gt;Compliance&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Reactive (human-led audits)&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Proactive (auto-flagging discrepancies)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0; font-size: 1.1em;&quot;&gt;Scalability&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Limited by human curation&lt;/td&gt;
+&lt;td style=&quot;padding: 20px; border: 1px solid #e0e0e0;&quot;&gt;Handles millions of documents via AI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For example, a legal team using RAG can instantly compare new contracts against global regulatory changes and precedents, while traditional DMS would require manual cross-referencing.&lt;/p&gt;
+
+&lt;h3 id=&quot;path-to-autonomy&quot;&gt;Path to Autonomy&lt;/h3&gt;
+
+&lt;p&gt;RAG’s evolution mirrors the rise of “dark factories” in manufacturing—fully automated facilities where AI and robotics replace human labor. The transition is occurring in three distinct phases:&lt;/p&gt;
+
+&lt;h4 id=&quot;1-hybrid-systems-20242025&quot;&gt;1. Hybrid Systems (2024–2025)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Human validation of RAG outputs&lt;/li&gt;
+  &lt;li&gt;Tools like Agentic RAR begin automating multi-step reasoning&lt;/li&gt;
+  &lt;li&gt;Example: Synthesizing due diligence reports with human oversight&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-increasing-autonomy-20262027&quot;&gt;2. Increasing Autonomy (2026–2027)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Systems self-correct using feedback loops&lt;/li&gt;
+  &lt;li&gt;Integration of AI TRiSM frameworks for compliance and security&lt;/li&gt;
+  &lt;li&gt;Example: Refining contract clauses based on court rulings&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-dark-document-management-post-2028&quot;&gt;3. “Dark Document Management” (Post-2028)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Fully autonomous systems handle ingestion, analysis, and action&lt;/li&gt;
+  &lt;li&gt;Auto-filing patents and responding to RFPs&lt;/li&gt;
+  &lt;li&gt;Human roles shift to oversight and strategy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;evidence--impact&quot;&gt;Evidence &amp;amp; Impact&lt;/h3&gt;
+
+&lt;h4 id=&quot;enterprise-adoption&quot;&gt;Enterprise Adoption&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;By 2026, 80% of enterprises will deploy GenAI tools like RAG (Gartner)&lt;/li&gt;
+  &lt;li&gt;Companies like Merck already report 64% reduction in literature review time using agentic RAG&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;technical-advancements&quot;&gt;Technical Advancements&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Retrieval-Augmented Reasoning (RAR)&lt;/strong&gt;: Systems like HippoRAG 2 use graph-based reasoning to connect disparate documents&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Self-Optimizing Pipelines&lt;/strong&gt;: AI adjusts chunking and embedding strategies for better relevance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;industry-analogies&quot;&gt;Industry Analogies&lt;/h4&gt;
+&lt;p&gt;The success of dark factories in manufacturing demonstrates the viability of fully automated systems, with RAG poised to replicate this achievement in knowledge work.&lt;/p&gt;
+
+&lt;h3 id=&quot;key-challenges&quot;&gt;Key Challenges&lt;/h3&gt;
+
+&lt;p&gt;While the path toward autonomous document management is clear, several critical challenges remain:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Ethics &amp;amp; Accountability&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Question of liability when autonomous RAG misinterprets documents&lt;/li&gt;
+      &lt;li&gt;Need for human oversight in high-stakes decisions&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Data Bias&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Risk of systems perpetuating inequities if trained on skewed data&lt;/li&gt;
+      &lt;li&gt;Importance of diverse and representative training sets&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Infrastructure Costs&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Significant investment required for vector databases&lt;/li&gt;
+      &lt;li&gt;GPU infrastructure needs for scaling RAG operations&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;debates--future-directions&quot;&gt;Debates &amp;amp; Future Directions&lt;/h2&gt;
+
+&lt;h3 id=&quot;key-debates&quot;&gt;Key Debates&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;RAG vs. Large Context Windows&lt;/strong&gt;: While 10M-token models reduce retrieval needs, costs and latency remain prohibitive&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Hybrid Architectures&lt;/strong&gt;: MemoRAG and HippoRAG 2 blend RAG with memory banks for multi-session personalization&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open-Source vs. Proprietary&lt;/strong&gt;: LlamaIndex and LangChain democratize RAG, yet enterprises favor closed systems&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;future-trends&quot;&gt;Future Trends&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Multimodal RAG&lt;/strong&gt;: Retrieving images, sensor data, and video for industrial AI&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;On-Device RAG&lt;/strong&gt;: Local processing for privacy-sensitive tasks&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Self-Improving Systems&lt;/strong&gt;: Reinforcement learning to optimize retrieval strategies&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;RAG is not a passing trend but a foundational shift in AI’s ability to reason and act on real-world data. For industries like legal, fintech, retail, and healthcare, its value lies in bridging the gap between generative creativity and operational precision. However, success demands more than technical prowess—it requires ethical rigor, domain expertise, and a willingness to evolve alongside hybrid architectures.&lt;/p&gt;
+
+&lt;p&gt;Organizations should prioritize RAG if they:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Handle dynamic, proprietary, or regulated data&lt;/li&gt;
+  &lt;li&gt;Seek to reduce hallucinations while maintaining LLM flexibility&lt;/li&gt;
+  &lt;li&gt;Aim to automate decision-making without sacrificing auditability&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As AI progresses, RAG will remain a critical enabler, but its future lies in collaboration—with agentic frameworks, memory systems, and human oversight. The question is no longer if to adopt RAG, but how to adapt it responsibly.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 Apr 2025 00:00:00 +0000</pubDate>
+        <link>https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html</link>
+        <guid isPermaLink="true">https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html</guid>
+        
+        
+        <category>artificial-intelligence</category>
+        
+        <category>machine-learning</category>
+        
+        <category>enterprise-technology</category>
+        
+      </item>
+    
+      <item>
+        <title>Building a Modern Tech Blog with Jekyll</title>
+        <description>&lt;p&gt;As I launch this new blog, I wanted to share my experience building a modern technical publishing platform using Jekyll. Whether you’re a developer looking to create your own space for technical writing or just curious about content management systems, this guide will walk you through the process from concept to deployment.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-i-chose-jekyll-for-my-technical-blog&quot;&gt;Why I Chose Jekyll for My Technical Blog&lt;/h2&gt;
+
+&lt;p&gt;When evaluating options for my technical blog, I considered various platforms like WordPress, Ghost, and several JavaScript frameworks. I ultimately chose Jekyll for several compelling reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Markdown-based content authoring&lt;/strong&gt; - Writing in Markdown lets me focus on content rather than formatting&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Git-based workflow&lt;/strong&gt; - Version control for my articles feels natural as a developer&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Static site generation&lt;/strong&gt; - Fast loading times, excellent security, and minimal hosting requirements&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Customization flexibility&lt;/strong&gt; - Complete control over the design without unnecessary complexity&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;GitHub Pages integration&lt;/strong&gt; - Free, reliable hosting with built-in CI/CD&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Unlike dynamic CMS platforms, Jekyll generates static HTML files that can be hosted anywhere, reducing security concerns and hosting costs while maximizing performance.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-content-creation-workflow&quot;&gt;The Content Creation Workflow&lt;/h2&gt;
+
+&lt;p&gt;One of Jekyll’s greatest strengths is how it integrates with a developer’s existing workflow. Here’s how my content creation process works from idea to publication:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/tech-articles/assets/images/articles/2025/content-creation-wf-2025-04-16-043556.png&quot; alt=&quot;Content Creation Workflow&quot; class=&quot;img-fluid rounded shadow&quot; style=&quot;max-width: 40%; height: auto; display: block; margin: 0 auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This workflow gives me several advantages:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Version control&lt;/strong&gt; for all content changes&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Collaborative editing&lt;/strong&gt; through pull requests if needed&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Automated deployment&lt;/strong&gt; removing manual publishing steps&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Content and code together&lt;/strong&gt; in a single repository&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;setting-up-your-own-jekyll-blog&quot;&gt;Setting Up Your Own Jekyll Blog&lt;/h2&gt;
+
+&lt;p&gt;If you’d like to create a similar setup, here’s how to get started:&lt;/p&gt;
+
+&lt;h3 id=&quot;1-initial-setup&quot;&gt;1. Initial Setup&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install Ruby and Jekyll dependencies&lt;/span&gt;
+gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jekyll bundler
+
+&lt;span class=&quot;c&quot;&gt;# Create a new Jekyll site&lt;/span&gt;
+jekyll new my-tech-blog
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;my-tech-blog
+
+&lt;span class=&quot;c&quot;&gt;# Start the local development server&lt;/span&gt;
+bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Your site will be available at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://localhost:4000&lt;/code&gt; for previewing as you work.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-customizing-your-theme&quot;&gt;2. Customizing Your Theme&lt;/h3&gt;
+
+&lt;p&gt;While Jekyll comes with a default theme, I wanted something that felt more like a technical documentation site. I created a custom theme with these modifications:&lt;/p&gt;
+
+&lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Example SCSS customization&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$brand-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#0969DA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$header-height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;48px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$sidebar-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;300px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.md-container&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.md-main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The visual design emphasizes readability with a clean, distraction-free layout that puts the content first.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-content-organization&quot;&gt;3. Content Organization&lt;/h3&gt;
+
+&lt;p&gt;Jekyll’s content structure is intuitive for a technical blog:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my-tech-blog/
+├── _posts/              # Blog articles 
+├── _layouts/            # HTML templates
+├── _includes/           # Reusable components
+├── assets/              # CSS, JS, images
+├── pages/               # Static pages
+└── _config.yml          # Site configuration
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Articles go in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory with filenames following the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YYYY-MM-DD-title.md&lt;/code&gt; format, which automatically generates URLs and organizes content chronologically.&lt;/p&gt;
+
+&lt;h2 id=&quot;advanced-features-i-implemented&quot;&gt;Advanced Features I Implemented&lt;/h2&gt;
+
+&lt;p&gt;Beyond the basics, I incorporated several advanced features to enhance the reader experience:&lt;/p&gt;
+
+&lt;h3 id=&quot;syntax-highlighting&quot;&gt;Syntax Highlighting&lt;/h3&gt;
+
+&lt;p&gt;Code blocks are automatically highlighted to improve readability:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Example JavaScript function&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calculateOptimalPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;startIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;visited&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;Infinity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;startIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;visited&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Find the node with the minimum cost&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minCost&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;Infinity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minNode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;visited&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minCost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;minCost&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;minNode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Mark as visited&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;visited&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;minNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Update costs to adjacent nodes&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;neighbor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;minNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;adjacentNodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;visited&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;neighbor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;neighbor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;neighbor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;minNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;responsive-design&quot;&gt;Responsive Design&lt;/h3&gt;
+
+&lt;p&gt;The site adapts seamlessly to different screen sizes:&lt;/p&gt;
+
+&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@media&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;screen&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;768px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;.grid-container&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;py&quot;&gt;grid-template-columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  
+  &lt;span class=&quot;nc&quot;&gt;.navigation-column&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  
+  &lt;span class=&quot;nc&quot;&gt;.md-header__button&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;search-functionality&quot;&gt;Search Functionality&lt;/h3&gt;
+
+&lt;p&gt;I implemented client-side search to help readers find relevant content:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;DOMContentLoaded&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;searchInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;search-input&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;searchResults&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;search-results&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  
+  &lt;span class=&quot;nx&quot;&gt;searchInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;toLowerCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Search logic here&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allPosts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 
+      &lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;toLowerCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; 
+      &lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;toLowerCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Display results&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;displayResults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;deployment-strategy&quot;&gt;Deployment Strategy&lt;/h2&gt;
+
+&lt;p&gt;For deployment, I chose GitHub Pages because of its seamless integration with Jekyll:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/tech-articles/assets/images/articles/2025/deployment-jekyll-content-2025-04-16-043915.png&quot; alt=&quot;Deployment Strategy&quot; class=&quot;img-fluid rounded shadow&quot; style=&quot;max-width: 100%; height: auto; display: block; margin: 0 auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The deployment process is fully automated - whenever I push changes to the main branch, GitHub Actions builds the site and deploys it to GitHub Pages.&lt;/p&gt;
+
+&lt;h2 id=&quot;performance-optimization&quot;&gt;Performance Optimization&lt;/h2&gt;
+
+&lt;p&gt;To ensure the site loads quickly, I implemented several optimizations:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Minified CSS and JavaScript&lt;/strong&gt; using Jekyll’s built-in compression&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Responsive images&lt;/strong&gt; that load appropriate sizes based on the device&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Preloading critical resources&lt;/strong&gt; to improve perceived loading speed&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Browser caching&lt;/strong&gt; for static assets&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These optimizations result in perfect Lighthouse scores for performance and accessibility.&lt;/p&gt;
+
+&lt;h2 id=&quot;challenges-and-solutions&quot;&gt;Challenges and Solutions&lt;/h2&gt;
+
+&lt;p&gt;Building this site wasn’t without challenges. Here are some issues I encountered and how I resolved them:&lt;/p&gt;
+
+&lt;h3 id=&quot;optional-feature-custom-domain-configuration&quot;&gt;Optional Feature: Custom Domain Configuration&lt;/h3&gt;
+
+&lt;p&gt;While I’m using the default GitHub Pages URL for this blog, many readers might want to set up a custom domain. If you’re interested in that route, here’s what you’ll need to do:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add the appropriate A records pointing to GitHub’s servers in your domain registrar’s settings&lt;/li&gt;
+  &lt;li&gt;Configure a CNAME file in your repository with your domain name&lt;/li&gt;
+  &lt;li&gt;Enable HTTPS in the GitHub repository settings&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This process turns your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username.github.io/repository&lt;/code&gt; URL into a professional &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yourdomain.com&lt;/code&gt; address.&lt;/p&gt;
+
+&lt;h3 id=&quot;challenge-code-block-styling&quot;&gt;Challenge: Code Block Styling&lt;/h3&gt;
+
+&lt;p&gt;Getting code blocks to look good on both light and dark themes required some custom CSS:&lt;/p&gt;
+
+&lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;font-family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ui-monospace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SFMono-Regular&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;SF Mono&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Menlo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consolas&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;monospace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;.85rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;6px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$grey-color-light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@media&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefers-color-scheme&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dark&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#1a1a1a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#e6e6e6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Building this technical blog with Jekyll has been a rewarding experience that aligns perfectly with my workflow as a developer. The platform provides the right balance of simplicity and flexibility, allowing me to focus on creating content while maintaining complete control over the presentation.&lt;/p&gt;
+
+&lt;p&gt;I hope this walkthrough helps you in creating your own technical blogging platform.&lt;/p&gt;
+
+&lt;p&gt;Happy blogging!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
+        <link>https://msmriyaz.github.io/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html</link>
+        <guid isPermaLink="true">https://msmriyaz.github.io/tech-articles/2025/04/16/building-a-modern-tech-blog-with-jekyll.html</guid>
+        
+        
+        <category>web-development</category>
+        
+        <category>blogging</category>
+        
+      </item>
+    
+  </channel>
+</rss> 
