@@ -9,6 +9,26 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
   
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:url" content="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/images/og-default.jpg' | absolute_url }}{% endif %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="twitter:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/images/og-default.jpg' | absolute_url }}{% endif %}">
+  
+  <!-- WhatsApp Specific (helps with link previews) -->
+  <meta property="og:image:alt" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:locale" content="en_US">
+  
   <!-- Google Analytics -->
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDQE96RC7P"></script>
@@ -315,20 +335,23 @@
                 <span style="font-weight: bold;">Share to:</span>
 
                 <!-- Social Media Links -->
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}" target="_blank" title="Share on LinkedIn">
-                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}&title={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}&summary={{ page.excerpt | strip_html | strip_newlines | truncate: 140 | url_encode }}" target="_blank" title="Share on LinkedIn">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://bsky.app/intent/compose?text={{ site.url }}{{ page.url }}" target="_blank" title="Share on Bluesky">
-                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
+                <a href="https://wa.me/?text={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}%20-%20{{ site.url }}{{ page.url | url_encode }}" target="_blank" title="Share on WhatsApp">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}" target="_blank" title="Share on X (Twitter)">
-                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
+                <a href="https://bsky.app/intent/compose?text={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}%20{{ site.url }}{{ page.url | url_encode }}" target="_blank" title="Share on Bluesky">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" alt="Bluesky logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://reddit.com/submit?url={{ site.url }}{{ page.url }}" target="_blank" title="Share on Reddit">
-                  <img width="20px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
+                <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url | url_encode }}&text={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}" target="_blank" title="Share on X (Twitter)">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="X logo" style="vertical-align: middle;">
                 </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" target="_blank" title="Share on Facebook">
-                  <img width="20px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
+                <a href="https://reddit.com/submit?url={{ site.url }}{{ page.url | url_encode }}&title={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}" target="_blank" title="Share on Reddit">
+                  <img width="26px" src="https://redditinc.com/hubfs/Reddit%20Inc/Brand/Reddit_Logo.png" alt="Reddit logo" style="vertical-align: middle;">
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url | url_encode }}&quote={% if page.title %}{{ page.title | url_encode }}{% else %}{{ site.title | url_encode }}{% endif %}" target="_blank" title="Share on Facebook">
+                  <img width="26px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo" style="vertical-align: middle;">
                 </a>
               </div>
               
