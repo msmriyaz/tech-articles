@@ -1,0 +1,144 @@
+---
+layout: default
+title: Refresh Facebook Cache
+---
+
+<div class="container">
+  <h1>Refresh Facebook Cache</h1>
+  
+  <div class="alert alert-warning">
+    <p><strong>Important:</strong> If your links are showing "Page not found" on Facebook, use this tool to refresh Facebook's cache.</p>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Step 1: Enter the URL to refresh</h5>
+      <form id="refresh-form" class="mb-3">
+        <div class="form-group">
+          <label for="urlInput">Article URL:</label>
+          <input type="url" class="form-control" id="urlInput" required 
+            placeholder="https://msmriyaz.github.io/tech-articles/2025/04/18/evolution-of-retrieval-augmented-generation.html">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Generate Facebook Debug URL</button>
+      </form>
+      
+      <div id="result" style="display: none;">
+        <h5 class="card-title">Step 2: Click the link below to refresh the cache</h5>
+        <p>Open this link and click "Scrape Again" button on Facebook's debugger page:</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="debugUrl" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="copyDebugUrl()">Copy</button>
+            <a id="debugLink" class="btn btn-primary" href="#" target="_blank">Open Debugger</a>
+          </div>
+        </div>
+        <div id="copyStatus" class="text-success" style="display: none;">URL copied to clipboard!</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5>Why is this necessary?</h5>
+    </div>
+    <div class="card-body">
+      <p>Facebook caches information about your URLs. When you update your site, Facebook may continue to show old information or "Page not found" errors until you manually refresh the cache.</p>
+      
+      <h6>Common Issues</h6>
+      <ul>
+        <li><strong>Page not found:</strong> Facebook is trying to access a URL that doesn't exist or has been cached incorrectly</li>
+        <li><strong>Wrong image:</strong> Facebook is showing an old or incorrect image for your link</li>
+        <li><strong>Missing/wrong title or description:</strong> Facebook is using old metadata</li>
+      </ul>
+      
+      <h6>How to fix:</h6>
+      <ol>
+        <li>Use the tool above to generate a Facebook Debugger link for your URL</li>
+        <li>Open the link and click "Scrape Again" on Facebook's page</li>
+        <li>You may need to click "Scrape Again" 2-3 times for the changes to take effect</li>
+        <li>Verify that your page information looks correct in the preview</li>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <h5>URL Construction Table</h5>
+    </div>
+    <div class="card-body">
+      <p>This table shows how URLs should be constructed on this site:</p>
+      
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Component</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>site.url</td>
+              <td><code>{{ site.url }}</code></td>
+            </tr>
+            <tr>
+              <td>site.baseurl</td>
+              <td><code>{{ site.baseurl }}</code></td>
+            </tr>
+            <tr>
+              <td>Correct article URL format</td>
+              <td><code>{{ site.url }}{{ site.baseurl }}/YEAR/MONTH/DAY/title.html</code></td>
+            </tr>
+            <tr>
+              <td>Example</td>
+              <td><code>{{ site.url }}{{ site.baseurl }}/2025/04/18/evolution-of-retrieval-augmented-generation.html</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('refresh-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) return;
+    
+    // Generate Facebook debugger URL
+    const debugUrl = 'https://developers.facebook.com/tools/debug/?q=' + encodeURIComponent(url);
+    
+    // Update UI
+    document.getElementById('debugUrl').value = debugUrl;
+    document.getElementById('debugLink').href = debugUrl;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('copyStatus').style.display = 'none';
+    
+    // Scroll to result
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  });
+  
+  function copyDebugUrl() {
+    const debugUrl = document.getElementById('debugUrl');
+    debugUrl.select();
+    document.execCommand('copy');
+    
+    document.getElementById('copyStatus').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('copyStatus').style.display = 'none';
+    }, 2000);
+  }
+  
+  // Pre-fill the URL from the query parameter if present
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlParam = urlParams.get('url');
+    
+    if (urlParam) {
+      document.getElementById('urlInput').value = urlParam;
+      document.getElementById('refresh-form').dispatchEvent(new Event('submit'));
+    }
+  });
+</script> 

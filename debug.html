@@ -1,0 +1,39 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jekyll Variable Debug</title>
+</head>
+<body>
+  <h1>Jekyll Variable Debug</h1>
+  
+  <h2>Base Variables</h2>
+  <ul>
+    <li>site.url: {{ site.url }}</li>
+    <li>site.baseurl: {{ site.baseurl }}</li>
+    <li>page.url: {{ page.url }}</li>
+  </ul>
+  
+  <h2>URL Construction Tests</h2>
+  <ul>
+    <li>site.url + site.baseurl: {{ site.url }}{{ site.baseurl }}</li>
+    <li>site.url + site.baseurl + page.url: {{ site.url }}{{ site.baseurl }}{{ page.url }}</li>
+    <li>absolute_url of page.url: {{ page.url | absolute_url }}</li>
+    <li>relative_url of page.url: {{ page.url | relative_url }}</li>
+  </ul>
+  
+  <h2>Meta Tag Tests</h2>
+  <ul>
+    <li>canonical: {{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}</li>
+    <li>og:url: {{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}</li>
+  </ul>
+  
+  <h2>Common URL Constructions</h2>
+  <ul>
+    <li>Post URL example: {{ site.url }}{{ site.baseurl }}/2025/04/18/evolution-of-retrieval-augmented-generation.html</li>
+    <li>Home URL: {{ site.url }}{{ site.baseurl }}/</li>
+  </ul>
+</body>
+</html> 

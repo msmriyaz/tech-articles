@@ -1,10 +1,10 @@
 title: RZTech
 description: A collection of my technical writings.
-baseurl: "/tech-articles" # or "" if it is in the root of your username.github.io
+baseurl: "/tech-articles" # the subpath of your site, e.g. /blog
 url: "https://msmriyaz.github.io" # your domain without the baseurl
 # theme: minima # We're using our own custom styles instead
 
-# Permalink pattern for posts (ignores categories)
+# Permalink pattern for posts
 permalink: /:year/:month/:day/:title:output_ext
 
 # Plugins
